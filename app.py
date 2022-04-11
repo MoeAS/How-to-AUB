@@ -14,7 +14,7 @@ import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Wearecool12345@172.20.10.2:3306/howtoaub'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:7aMoudi72571@127.0.0.1:3306/howtoaub'
 db = SQLAlchemy(app)
 
 CORS(app)
@@ -43,6 +43,10 @@ class UserSchema(ma.Schema):
 
 user_schema = UserSchema()
 
+@app.route('/hello', methods=['GET'])
+def hello():
+    return jsonify({"Hello":"World"})
+
 @app.route('/signup', methods=['POST'])
 def signup():
     print(request)
@@ -69,14 +73,15 @@ def signin():
         else:
 
             if (bcrypt.check_password_hash(user.hashed_password, password)):
-                token = create_token(user.id)
-                return jsonify({'token': token})
+                #token = create_token(user.id)
+                #return jsonify({'token': token})
+                return jsonify({'message':"Moe"})
             else:
                 abort(403)
 
-    db.session.add(u)
+    db.session.add(user)
     db.session.commit()
-    return jsonify(user_schema.dump(u))
+    return jsonify(user_schema.dump(user))
 
 
 
