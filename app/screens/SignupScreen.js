@@ -13,6 +13,7 @@ import colors from '../config/colors';
 
 import { signUp } from '../../actions/authentication';
 import {useDispatch} from "react-redux";
+import { useEffect } from 'react';
 
 
 
@@ -30,15 +31,32 @@ const validationSchema = Yup.object().shape({
 });
 
 function SignupScreen({props, navigation}) {
-    const dispatch = useDispatch();
+   
     [email, setEmail] = useState("");  
     [username, setUsername] = useState("");
     [password, setPassword] = useState("");
     [confirmpass, setConfirmPassword] = useState("");
-    function signupFrontend() {
-        console.log(validationSchema);
-        //dispatch(signUp({email:email, password:password, username:username}, navigation));
-    }
+
+    const headers = {"Content-type" : "application/json"};
+
+    const signup = () => {
+        fetch('http://127.0.0.1:5000/signup', {
+            method: 'POST',
+            headers: {headers},
+            body: JSON.stringify({
+                "user_email": email,
+                "user_name": username,
+                "password": password
+
+        }) // body data type must match "Content-Type" header
+        
+        
+        })
+        .then(resp => resp.json())
+        .catch(error => console.log(error))
+        
+    };
+    
     return (
       <DismissKeyboard>
         <ImageBackground
@@ -107,7 +125,7 @@ function SignupScreen({props, navigation}) {
 
                 <View style = {styles.signupbutton}>
                     <SubmitButton title = "Sign Up"
-                    onPress={signupFrontend}
+                    onPress={() => signup()}
                     ></SubmitButton>
                 </View>
 

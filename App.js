@@ -34,13 +34,11 @@ import { WebView } from 'react-native-webview';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { DrawerContent } from './app/components/DrawerContent';
-import { Provider } from "react-redux";
 
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
-import reducers from "./reducers";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+
+
+
 
 const AUB2DMAP = 'https://www.aub.edu.lb/Documents/map_posters.pdf';
 const AUB3DMAP = 'https://fpdumap.azurewebsites.net/';
@@ -226,7 +224,7 @@ const WelcomeStackScreen = ({navigation}) => (
 const App = () => {
 
   return (
-    <Provider store={store}>
+   
     <NavigationContainer>
     <Drawer.Navigator initialRouteName="Home" screenOptions={{
       headerShown: false
@@ -245,7 +243,7 @@ const App = () => {
         <Drawer.Screen name="Clubs" component={ClubsStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
-    </Provider>
+    
   
 
   );

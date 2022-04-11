@@ -29,18 +29,29 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen({props, navigation}) {
-    const dispatch = useDispatch();
+   
     [email, setEmail] = useState("");
     [password, setPassword] = useState("");
-    const storedata = useSelector((state) => state);
-    console.log("testing data:");
-    console.log(storedata);
-    function loginFrontend() {
-        console.log(email);
-        console.log(password);
-        dispatch(signIn({email:email, password:password}, navigation));
-        dispatch(fetchingClubs());
+    
+    const headers = {"Content-type" : "application/json"};
+
+    const signin = () => {
+        fetch('http://127.0.0.1:5000/signin', {
+            method: 'POST',
+            headers: {headers},
+            body: JSON.stringify({
+                "user_email": email,
+                "password": password
+
+        }) // body data type must match "Content-Type" header
+        
+        
+        })
+        .then(resp => resp.json())
+        .catch(error => console.log(error))
+        
     };
+    
 
     return (
         <DismissKeyboard>
@@ -88,7 +99,7 @@ function LoginScreen({props, navigation}) {
             </DismissKeyboard>
                 <View style = {styles.loginbutton}>
                     <SubmitButton title = "Login"
-                    onPress={loginFrontend}
+                    onPress={() => signin()}
                     ></SubmitButton>
                 </View>
 

@@ -13,13 +13,9 @@ import { useFocusEffect } from '@react-navigation/native';
 
 
 function ClubsScreen(props) {
-    const dispatch = useDispatch();
-    const myClubs = useSelector((state) => state.allClubsReducer);
-    console.log("my clubs:");
-    console.log(myClubs);
-    useEffect (() => {
-        dispatch(fetchingClubs());
-    }, [dispatch]);
+    
+    const myClubs = [];
+   
     return (
         
         <Screen>
@@ -40,16 +36,7 @@ function ClubsScreen(props) {
                 </View>
 
                 <FlatList 
-                    style = {styles.clubs}
-                    data = {myClubs}
-                    keyExtractor = {(club) => club.club_name.toString()}
-                    renderItem = {({item}) => 
-                        <ClubField
-                            club_name={item.club_name}
-                            club_description = {item.club_description}
-                            CRN = {item.CRN}
-                        />
-                    }
+                    
                 />
 
                 
