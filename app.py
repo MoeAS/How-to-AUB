@@ -53,7 +53,7 @@ def signup():
     user_email = request.json['user_email']
     user_name = request.json['user_name']
     hashed_password = request.json['password']
-   
+
     u = User(user_email, user_name, hashed_password)
     db.session.add(u)
     db.session.commit()
@@ -65,23 +65,20 @@ def signin():
     user_email= request.json['user_email']
     password = request.json['password']
     if (user_email == " " or password == " "):
-        abort(400)
+        return jsonify({"msg": "Enter email or password"})
     else:
         user = User.query.filter_by(user_email=user_email).first()
         if (user is None):
-            abort(403)
+            return jsonify({"msg": "Wrong email or password"})
         else:
 
             if (bcrypt.check_password_hash(user.hashed_password, password)):
                 #token = create_token(user.id)
                 #return jsonify({'token': token})
-                return jsonify({'message':"Moe"})
+                return jsonify({'msg':"Successful"})
             else:
-                abort(403)
+                return jsonify({"msg": "Wrong email or password"})
 
     db.session.add(user)
     db.session.commit()
     return jsonify(user_schema.dump(user))
-
-
-
