@@ -64,21 +64,27 @@ def signin():
     print(request)
     user_email= request.json['user_email']
     password = request.json['password']
-    if (user_email == " " or password == " "):
-        return jsonify({"msg": "Enter email or password"})
+    if (user_email == "" or password == ""):
+        return jsonify({"msg": "Enter email or password"}), 401
     else:
         user = User.query.filter_by(user_email=user_email).first()
         if (user is None):
-            return jsonify({"msg": "Wrong email or password"})
+            return jsonify({"msg": "Wrong Email"}), 402
         else:
 
             if (bcrypt.check_password_hash(user.hashed_password, password)):
                 #token = create_token(user.id)
                 #return jsonify({'token': token})
-                return jsonify({'msg':"Successful"})
+                return jsonify({'msg':"Successful"}), 200
             else:
-                return jsonify({"msg": "Wrong email or password"})
+                return jsonify({"msg": "Wrong Password"}), 403
 
     db.session.add(user)
     db.session.commit()
     return jsonify(user_schema.dump(user))
+
+@app.route('/clubs', methods=['GET'])
+def clubs():
+    print(request)
+    club = Club.query.all()
+    return jsonify(user_schema.dump(club))
