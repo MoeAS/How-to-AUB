@@ -4,8 +4,9 @@
  *
  * @format
  */
-
+sourceExts: ['js', 'json', 'ts', 'tsx'];
 module.exports = {
+  
   transformer: {
     getTransformOptions: async () => ({
       transform: {

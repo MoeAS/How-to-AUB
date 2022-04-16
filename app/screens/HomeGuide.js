@@ -32,6 +32,9 @@ function HomeGuide({props, navigation}) {
                     <AppButton title = "Volunteering" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("")}
                     ></AppButton>
+                    <AppButton title = "Workshops" color = "darkgray" textcolor = "white"
+                    onPress={() => navigation.navigate("Courses")}
+                    ></AppButton>
                 </View>
 
         </ImageBackground>

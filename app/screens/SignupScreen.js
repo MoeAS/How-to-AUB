@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { ImageBackground, StyleSheet, View, Image, Text, Keyboard,  TouchableWithoutFeedback} from 'react-native';
+import { ImageBackground, StyleSheet, View, Image, Text, Keyboard,  TouchableWithoutFeedback, Alert} from 'react-native';
 
 import AppFormField from '../components/AppFormField';
 import AppForm from '../components/AppForm';
@@ -37,25 +37,64 @@ function SignupScreen({props, navigation}) {
     [password, setPassword] = useState("");
     [confirmpass, setConfirmPassword] = useState("");
 
-    const headers = {"Content-type" : "application/json"};
+    const headers = {"Content-Type": "application/json"};
 
-    const signup = () => {
-        fetch('http://127.0.0.1:5000/signup', {
-            method: 'POST',
-            headers: {headers},
-            body: JSON.stringify({
-                "user_email": email,
-                "user_name": username,
-                "password": password
+    const signUp = () => {
+        if(confirmpass == password){
+          fetch('http://10.169.11.184:3000/signup', {
+              method: 'POST',
+              headers: {
+                "Content-type" : "application/json"
+              },
+              body: JSON.stringify({
+                  "user_email": email,
+                  "user_name": username,
+                  "password": password
 
-        }) // body data type must match "Content-Type" header
-        
-        
-        })
-        .then(resp => resp.json())
-        .catch(error => console.log(error))
-        
-    };
+          }) // body data type must match "Content-Type" header
+
+          })
+          .then((response) => {
+
+            if (response.status == 200) {
+            Alert.alert(
+            "Success",
+            "Registration Successful!",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+
+          navigation.navigate("LoginAfter")
+          }
+
+          else {
+            Alert.alert(
+            "Error",
+            "Email or Username already exists",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+
+          })
+          .catch(error => console.log(error))
+
+        }
+
+    else {
+      Alert.alert(
+      "Error",
+      "Passwords should be equal",
+      [
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+    }
+
+  };
+            
     
     return (
       <DismissKeyboard>
@@ -89,6 +128,7 @@ function SignupScreen({props, navigation}) {
                 keyboardType= "email-address"
                 myValue = {email}
                 mySetValue = {setEmail}
+                //onChangeText = {email => setEmail(email)}
                 />
 
                 <AppFormField
@@ -99,6 +139,7 @@ function SignupScreen({props, navigation}) {
                 keyboardType= "default"
                 myValue = {username}
                 mySetValue = {setUsername}
+                //onChangeText = {username => setUsername(username)}
                 />
 
                 <AppFormField
@@ -110,6 +151,7 @@ function SignupScreen({props, navigation}) {
                 keyboardType= "default"
                 myValue = {password}
                 mySetValue = {setPassword}
+                //onChangeText = {password => setPassword(password)}
                 />
 
                 <AppFormField
@@ -121,11 +163,12 @@ function SignupScreen({props, navigation}) {
                 keyboardType= "default"
                 myValue = {confirmpass}
                 mySetValue = {setConfirmPassword}
+                //onChangeText = {confirmpass => setConfirmPassword(confirmpass)}
                 />
 
                 <View style = {styles.signupbutton}>
                     <SubmitButton title = "Sign Up"
-                    onPress={() => signup()}
+                    onPress={() => signUp()}
                     ></SubmitButton>
                 </View>
 

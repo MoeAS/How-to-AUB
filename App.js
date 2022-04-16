@@ -27,6 +27,8 @@ import LoginScreen from './app/screens/LoginScreen';
 import LoginAfter from './app/screens/LoginAfter';
 import HomeGuide from './app/screens/HomeGuide';
 import ClubsScreen from './app/screens/ClubsScreen';
+import CoursesScreen from './app/screens/CoursesScreen';
+import CourseDetails from './app/screens/CourseDetails';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -81,6 +83,8 @@ const AUBMAPSStack = createNativeStackNavigator();
 const AUBSISStack = createNativeStackNavigator();
 const AUBMOODLEStack = createNativeStackNavigator();
 const ClubsScreenStack = createNativeStackNavigator();
+const CoursesScreenStack = createNativeStackNavigator();
+const CourseDetailsStack = createNativeStackNavigator();
 
 const WelcomeStackScreen = ({navigation}) => (
   <WelcomeScreenStack.Navigator>
@@ -221,6 +225,34 @@ const WelcomeStackScreen = ({navigation}) => (
                     </ClubsScreenStack.Navigator>
                     );
 
+                    const CoursesStackScreen = ({navigation}) => (
+                      <CoursesScreenStack.Navigator>
+                        <CoursesScreenStack.Screen name="CoursesScreen" component={CoursesScreen} options={{
+                          headerShown: true,
+                          headerTransparent: true,
+                          title: '',
+                          headerLeft: () => (
+                          <Icon name='ios-menu' size = {25}
+                          onPress={() => {navigation.openDrawer()}}></Icon>
+                          )
+                        }}/>
+                      </CoursesScreenStack.Navigator>
+                      );
+
+                      const CourseStackDetails = ({navigation}) => (
+                        <CourseDetailsStack.Navigator>
+                          <CourseDetailsStack.Screen name="CourseDetails" component={CourseDetails} options={{
+                            headerShown: true,
+                            headerTransparent: true,
+                            title: '',
+                            headerLeft: () => (
+                            <Icon name='ios-menu' size = {25}
+                            onPress={() => {navigation.openDrawer()}}></Icon>
+                            )
+                          }}/>
+                        </CourseDetailsStack.Navigator>
+                        );
+
 const App = () => {
 
   return (
@@ -241,6 +273,8 @@ const App = () => {
         <Drawer.Screen name="AUBSIS" component={AUBSISStackScreen} />
         <Drawer.Screen name="AUBMOODLE" component={AUBMOODLEStackScreen} />
         <Drawer.Screen name="Clubs" component={ClubsStackScreen} />
+        <Drawer.Screen name="Courses" component={CoursesStackScreen} />
+        <Drawer.Screen name="CourseDetails" component={CourseStackDetails} initialParams={{course_crn:'123'}} />
       </Drawer.Navigator>
     </NavigationContainer>
     

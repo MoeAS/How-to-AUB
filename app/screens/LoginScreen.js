@@ -36,9 +36,11 @@ function LoginScreen({props, navigation}) {
     const headers = {"Content-type" : "application/json"};
 
     const signin = () => {
-        fetch('http://127.0.0.1:5000/signin', {
+        fetch('http://10.169.11.184:3000/signin', {
             method: 'POST',
-            headers: {headers},
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({
                 "user_email": email,
                 "password": password
@@ -47,10 +49,66 @@ function LoginScreen({props, navigation}) {
         
         
         })
-        .then(resp => resp.json())
-        .catch(error => console.log(error))
-        
-    };
+        .then((response) => {
+            console.log(response.status)
+            if (response.status == 200) {
+            Alert.alert(
+            "Success",
+            "Log In Successful!",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+  
+          navigation.navigate("How to Guide")
+          }
+  
+          else if (response.status == 401) {
+            Alert.alert(
+            "Error",
+            "Enter email or password",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+  
+          else if (response.status == 402) {
+            Alert.alert(
+            "Error",
+            "Invalid Email",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+  
+          else if (response.status == 403) {
+            Alert.alert(
+            "Error",
+            "Invalid Password",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+  
+          else {
+            Alert.alert(
+            "Error",
+            "An Error Occured",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+  
+          })
+          .catch(error => console.log(error))
+  
+  
+  
+  };
     
 
     return (

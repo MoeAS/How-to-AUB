@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ImageBackground, FlatList, ScrollView, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
@@ -14,7 +14,17 @@ import { useFocusEffect } from '@react-navigation/native';
 
 function ClubsScreen(props) {
     
-    const myClubs = [];
+    const [clubs, setClubs] = useState([]);
+
+    useEffect(() => {
+        fetch("http://192.168.2.145:3000/clubs" ,{
+            method : "GET"
+        })
+        .then(resp => resp.json())
+        .then(clubs => {setClubs(clubs)})
+    }, []
+
+    )
    
     return (
         
@@ -25,7 +35,7 @@ function ClubsScreen(props) {
             >
 
                 
-                <ScrollView style = {styles.scrollView}>
+                
 
                 <View style = {styles.logocontent}>
                 <Image source = {require("../assets/HowToClubs.png")}
@@ -35,17 +45,25 @@ function ClubsScreen(props) {
 
                 </View>
 
+                <View style = {styles.container}  >
                 <FlatList 
+                    data = {clubs}
+                    renderItem = {(data) => {return (<ClubField 
+                        club_description={data.item.club_description}
+                        club_name={data.item.club_name}
+                        CRN = {data.item.club_crn}
+                        />)}} 
                     
                 />
+                </View>
+                
+                
+                
+                
+                
+                
 
-                
-                
-                
-                
-                
-
-                </ScrollView>
+               
 
             </ImageBackground>
         </Screen>
@@ -70,12 +88,9 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     container: {
-        top: 160,
-        width: "100%",
-        padding: 15,
-        marginVertical: 55,
-        flex: 0.9,
-        position: "absolute",
+        top: 40,
+        flex: 1,
+        height: 400,
     },
     text:{
         color: colors.white,
@@ -93,7 +108,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         width: 300,
         height: 200,
-        left: 30,
+        
     },
    
 

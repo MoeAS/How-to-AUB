@@ -1,62 +1,68 @@
-import React from 'react';
-import {ImageBackground, ScrollView, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ImageBackground, FlatList, ScrollView, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
 
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from 'react-native-paper';
 
+import CourseField from '../components/CourseField';
+function CoursesScreen({props, navigation}) {
+    
+    const [courses, setCourses] = useState([]);
 
-function CoursesScreen(props) {
+    useEffect(() => {
+        fetch("http://172.20.10.2:3000/courses" ,{
+            method : "GET"
+        })
+        .then(resp => resp.json())
+        .then(courses => {setCourses(courses)})
+    }, []
+
+    )
+    
+
     return (
         
         <Screen>
-            <ImageBackground
-            style = {styles.background}
-            source = {require("../assets/bg2.jpg") }
+        <ImageBackground
+        style = {styles.background}
+        source = {require("../assets/bg2.jpg") }
+        >
+
+            
+            
+
+            <View style = {styles.logocontent}>
+            <Image source = {require("../assets/HowToCourses.png")}
+            //style = {styles.logo}
             >
+            </Image>
 
-                
-                <ScrollView style = {styles.scrollView}>
-
-                <View style = {styles.logocontent}>
-                <Image source = {require("../assets/HowToClubs.png")}
-                //style = {styles.logo}
-                >
-                </Image>
-
-                </View>
-                <View style = {styles.clubs}> 
-                    <View style={styles.clubcontent}>
-
-                        <View style = {styles.imgtitle}>
-                            <View style = {styles.img}>
-                                <Avatar.Image
-                                    source = {{
-                                    uri: 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png'
-                                    }}
-                                    size = {50}
-                                />
-                            </View>
-                            <View style = {styles.title}>
-                                <Title style = {styles.textTitle}>besties</Title>
-                            </View>
+            </View>
+           
+            <View style = {styles.container}  >
+            <FlatList 
+                data = {courses}
+                renderItem = {(data) => 
+                    <View style = {styles.courses}>
+                        <View style={styles.row1}>
+                            <Text onPress={() => navigation.navigate("CourseDetails",{course_crn:'10734',})} style={styles.text}> {data.item.course_name} </Text>
                         </View>
-
-                        <View style = {styles.description}>
-                            <Text style = {styles.textdesc} > moe is not cool but mansour is cool. they are besties. besties for ever. this is the club of the besties shaza and moe and mansour and dina. </Text>
+                        <View style={styles.row2}>
+                            <Text  style={styles.text}> {data.item.course_crn} </Text>
                         </View>
-
                     </View>
-                </View>
+                }
                 
-                
-                
-                
-
-                </ScrollView>
-
-            </ImageBackground>
-        </Screen>
+            />
+            
+            </View>
+            
+            
+            
+           
+        </ImageBackground>
+    </Screen>
         
     );
 }
@@ -67,63 +73,49 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    buttoncontainer:{
-        top: 70,
-        marginVertical: 170,
-        padding: 60,
-        width: "100%",
-        flex: 1,
-    },
-    scrollView:{
-        
-    },
+    
     container: {
-        top: 160,
-        width: "100%",
-        padding: 15,
-        marginVertical: 55,
-        flex: 0.9,
-        position: "absolute",
+        top: 40,
+        flex: 1,
+        height: 400,
+        
     },
     text:{
         color: colors.white,
-        top: 40,
-        fontWeight: 'bold',
-        position: "absolute",
-        marginVertical: -60,
-        marginHorizontal: 10,
-        fontSize : 40,
-    },
-    textdesc: {
-        color: colors.white,
+        
+       
+        fontSize : 15,
         
     },
-    textTitle: {
-        color: colors.white,
+    row1:{
+        width:290,
+        
     },
+    row2:{
+        width:60,
+        
+    },
+    
     logocontent: {
         //position: "absolute",
         top: 70,
         alignItems: "center",
         width: 300,
         height: 200,
+        left: 20,
     },
-    clubcontent: {
-        padding: 10,
-        backgroundColor: colors.lightsteelblue,
-    },
-    imgtitle: {
+    courses: {
+        
         flexDirection: 'row',
+        width: 350,
+        height: 50,
+        flexWrap: 'wrap',
+        borderBottomWidth: 3,
+        borderColor: 'white',
+        paddingVertical: 15,
+        
     },
-    title: {
-        padding: 10,
-    },
-    description: {
-        color: colors.white,
-    },
-    clubs: {
-        marginVertical: 30,
-    },
+    
 
 })
 
