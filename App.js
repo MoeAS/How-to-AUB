@@ -29,6 +29,7 @@ import HomeGuide from './app/screens/HomeGuide';
 import ClubsScreen from './app/screens/ClubsScreen';
 import CoursesScreen from './app/screens/CoursesScreen';
 import CourseDetails from './app/screens/CourseDetails';
+import CalendarScreen from './app/screens/CalendarScreen';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -85,6 +86,7 @@ const AUBMOODLEStack = createNativeStackNavigator();
 const ClubsScreenStack = createNativeStackNavigator();
 const CoursesScreenStack = createNativeStackNavigator();
 const CourseDetailsStack = createNativeStackNavigator();
+const CalendarScreenStack = createNativeStackNavigator();
 
 const WelcomeStackScreen = ({navigation}) => (
   <WelcomeScreenStack.Navigator>
@@ -253,6 +255,20 @@ const WelcomeStackScreen = ({navigation}) => (
                         </CourseDetailsStack.Navigator>
                         );
 
+                        const CalendarStackScreen = ({navigation}) => (
+                          <CalendarScreenStack.Navigator>
+                            <CalendarScreenStack.Screen name="CalendarScreen" component={CalendarScreen} options={{
+                              headerShown: true,
+                              headerTransparent: true,
+                              title: '',
+                              headerLeft: () => (
+                              <Icon name='ios-menu' size = {25}
+                              onPress={() => {navigation.openDrawer()}}></Icon>
+                              )
+                            }}/>
+                          </CalendarScreenStack.Navigator>
+                          );
+
 const App = () => {
 
   return (
@@ -275,6 +291,7 @@ const App = () => {
         <Drawer.Screen name="Clubs" component={ClubsStackScreen} />
         <Drawer.Screen name="Courses" component={CoursesStackScreen} />
         <Drawer.Screen name="CourseDetails" component={CourseStackDetails} initialParams={{course_crn:'123'}} />
+        <Drawer.Screen name="CalendarScreen" component={CalendarStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
     
