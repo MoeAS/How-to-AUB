@@ -15,50 +15,34 @@ from sqlalchemy import desc
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:7aMoudi72571@127.0.0.1:3306/howtoaub'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Wearecool12345@127.0.0.1:3306/howtoaub'
 db = SQLAlchemy(app)
 
 CORS(app)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
 
-#from model.user import User, user_schema
-
-class User(db.Model):
-
-    user_email = db.Column(db.String(30), primary_key=True)
-    user_name = db.Column(db.String(30), unique=True)
-    hashed_password = db.Column(db.String(128))
-
-    def __init__(self, user_email, user_name, password):
-        super(User, self).__init__(user_email=user_email)
-        super(User, self).__init__(user_name=user_name)
-        self.hashed_password = bcrypt.generate_password_hash(password)
+from model.user import User, user_schema
 
 
-class UserSchema(ma.Schema):
-    class Meta:
-        fields = ("user-email", "user_name", "hashed_password")
-        model = User
-
-
-user_schema = UserSchema()
 
 class Club(db.Model):
 
     club_crn = db.Column(db.String(30), primary_key=True)
     club_name = db.Column(db.String(70))
     club_description = db.Column(db.Text())
+    club_area = db.Column(db.String(70))
 
-    def __init__(self, club_crn, club_name, club_description):
+    def __init__(self, club_crn, club_name, club_description, club_area):
         super(Club, self).__init__(club_crn=club_crn)
         super(Club, self).__init__(club_name=club_name)
         super(Club, self).__init__(club_description=club_description)
+        super(Club, self).__init__(club_area= club_area)
 
 
 class ClubSchema(ma.Schema):
     class Meta:
-        fields = ("club_crn", "club_name", "club_description")
+        fields = ("club_crn", "club_name", "club_description", "club_area")
         model = Club
 
 
@@ -66,20 +50,22 @@ club_schema = ClubSchema()
 clubs_schema = ClubSchema(many=True)
 
 class Course(db.Model):
-
+    course_id = db.Column(db.String(70), unique=True)
     course_crn = db.Column(db.String(30), primary_key=True)
     course_name = db.Column(db.String(70))
     course_description = db.Column(db.Text())
+    course_dept = db.Column(db.String(70))
 
     def __init__(self, course_crn, course_name, course_description):
+        super(Course, self).__init__(course_id=course_id)
         super(Course, self).__init__(course_crn=course_crn)
         super(Course, self).__init__(course_name=course_name)
         super(Course, self).__init__(course_description=course_description)
-
+        super(Course, self).__init__(course_dept=course_dept)
 
 class CourseSchema(ma.Schema):
     class Meta:
-        fields = ("course_crn", "course_name", "course_description")
+        fields = ("course_id", "course_crn", "course_name", "course_description", "course_dept")
         model = Course
 
 
@@ -90,15 +76,16 @@ class Prerequisite(db.Model):
 
     course_crn = db.Column(db.String(30), primary_key=True)
     course_prereq = db.Column(db.String(30), primary_key=True)
+    course_pre_name = db.Column(db.String(30), unique=True)
 
-    def __init__(self, course_crn, course_prereq):
+    def __init__(self, course_crn, course_prereq, course_pre_name):
         super(Prerequisite, self).__init__(course_crn=course_crn)
         super(Prerequisite, self).__init__(course_prereq=course_prereq)
-
+        super(Prerequisite, self).__init__(course_pre_name=course_pre_name)
 
 class PrerequisiteSchema(ma.Schema):
     class Meta:
-        fields = ("course_crn", "course_prereq")
+        fields = ("course_crn", "course_prereq", "course_pre_name")
         model = Prerequisite
 
 
@@ -243,16 +230,16 @@ def courses():
     all_courses = Course.query.all()
     return jsonify(courses_schema.dump(all_courses))
 
-@app.route('/details', methods=['GET', 'POST'])
-def details():
-    print(request)
-    course_crn = request.json['course_crn']
-    courses_details = Course.query.filter_by(course_crn = course_crn).all()
-    return jsonify(course_schema.dump(courses_details))
 
-@app.route('/prerequisite', methods=['GET', 'POST'])
+
+@app.route('/prerequisite', methods=[ 'GET'])
 def prerequisite():
     print(request)
-    course_crn = request.json['course_crn']
-    courses_prerequisite = Prerequisite.query.filter_by(course_crn = course_crn).all()
+    courses_prerequisite = Prerequisite.query.all()
     return jsonify(prerequisites_schema.dump(courses_prerequisite))
+
+@app.route('/depts', methods=['GET'])
+def depts():
+    print(request)
+    all_depts = Course.query.with_entities(Course.course_dept).distinct()
+    return jsonify(courses_schema.dump(all_depts))
