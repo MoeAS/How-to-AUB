@@ -8,18 +8,14 @@ import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from
 
 
 function CourseDetails({route, navigation}) {
-    const data = route.params.courses
-    const prerequisite = route.params.prerequisite
-   
-    console.log(data)
+    const data = route.params.clubs
+    
     
     
 
     //setDetails(courses);
     
-    var crn = data.item.course_crn
-    console.log(prerequisite)
-
+    
     
 
     return (
@@ -31,7 +27,7 @@ function CourseDetails({route, navigation}) {
 
         >
             <View style = {styles.logocontent}>
-            <Image source = {require("../assets/HowToCourse.png")}
+            <Image source = {require("../assets/HowToClub.png")}
             //style = {styles.logo}
             >
             </Image>
@@ -40,22 +36,17 @@ function CourseDetails({route, navigation}) {
 
             <ScrollView style = {styles.scrollView}>
             <View style = {styles.container}> 
-                <View style = {styles.title}>
-
-                    <Text style = {styles.text_title}>Course Title: {data.item.course_id}</Text>
-                </View>
+                
 
                 <View style = {styles.name}>
-                    <Text style = {styles.text}>Course Name: {data.item.course_name}</Text>
+                    <Text style = {styles.text_name}>Course Name: {data.item.club_name}</Text>
                 </View>
 
                 <View style = {styles.desc}>
-                    <Text style = {styles.text}>Course Description: {data.item.course_description}</Text>
+                    <Text style = {styles.text}> Course Description: {data.item.club_description}</Text>
                 </View>
 
-                <View style = {styles.pre}>
-                    <Text style = {styles.text} >Course Prerequisites: {prerequisite.prerequisite}</Text>
-                </View>
+                
             </View>
             </ScrollView>
 
@@ -76,20 +67,21 @@ const styles = StyleSheet.create({
         
         
         top: 40,
-        padding: 5,
+        
     },
     container: {
         borderRadius: 20,
         backgroundColor: colors.mans,
         padding: 5,
         paddingVertical: 40,
+        width: 370,
     },
     text:{
         color: colors.white,
-        fontSize : 18,
+        fontSize : 15,
 
     },
-    text_title:{
+    text_name:{
         color: colors.white,
         fontSize : 25,
         fontWeight: 'bold',

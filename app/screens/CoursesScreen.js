@@ -15,9 +15,10 @@ function CoursesScreen({props, navigation}) {
     const [courses, setCourses] = useState([]);
     const [dept, setDept] = useState([]);
     const [selected, setSelected] = useState("");
+    const [prerequisite, setPrerequisite] = useState([]);
 
     useEffect(() => {
-        fetch("http://192.168.1.13:3000/courses" ,{
+        fetch("http://10.169.8.10:3000/courses" ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -29,14 +30,25 @@ function CoursesScreen({props, navigation}) {
 
 
     useEffect(() => {
-        fetch("http://172.20.10.2:3000/depts" ,{
+        fetch("http://10.169.8.10:3000/depts" ,{
             method : "GET"
         })
         .then(resp => resp.json())
         .then(dept => {setDept(dept)})
     }, []
 
-    )
+    );
+
+    useEffect(() => {
+        fetch("http://10.169.8.10:3000/prerequisite" ,{
+            method : "GET"
+        })
+        .then(resp => resp.json())
+        .then(prerequisite => {setPrerequisite(prerequisite)})
+    }, []
+
+    );
+    //console.log(prerequisite)
 
     for (let j = 0; j < dept.length; j++) {
         data.push(dept[j]["course_dept"])
@@ -61,7 +73,7 @@ function CoursesScreen({props, navigation}) {
 
     const clickedItem = (courses) => {
       console.log(courses);
-      navigation.navigate("CourseDetails",{screen: 'CourseDetails', params: {courses: courses}})
+      navigation.navigate("CourseDetails",{screen: 'CourseDetails', params: {courses: courses, prerequisite: prerequisite}})
     }
 
 
@@ -195,7 +207,7 @@ const styles = StyleSheet.create({
 
           flexDirection: 'row',
           width: 350,
-          height: 50,
+          height: 55,
           flexWrap: 'wrap',
           borderBottomWidth: 3,
           borderColor: 'white',

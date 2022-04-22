@@ -29,10 +29,12 @@ import HomeGuide from './app/screens/HomeGuide';
 import ClubsScreen from './app/screens/ClubsScreen';
 import CoursesScreen from './app/screens/CoursesScreen';
 import CourseDetails from './app/screens/CourseDetails';
+import ClubDetails from './app/screens/ClubDetails';
 import HowtoGuideDetails from './app/screens/HowtoGuideDetails';
 import HowtoGuideDetailsEdit from './app/screens/HowtoGuideDetailsEdit';
 import HowtoGuide from './app/screens/HowtoGuide';
 import CreateForum from './app/screens/CreateForum';
+import CreateReminder from './app/screens/CreateReminder';
 import CalendarScreen from './app/screens/CalendarScreen';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
@@ -95,6 +97,8 @@ const CreateForumStack = createNativeStackNavigator();
 const HowtoGuideDetailsStack = createNativeStackNavigator();
 const HowtoGuideDetailsEditStack = createNativeStackNavigator();
 const CalendarScreenStack = createNativeStackNavigator();
+const ClubDetailsStack = createNativeStackNavigator();
+const CreateReminderStack = createNativeStackNavigator();
 
 const WelcomeStackScreen = ({navigation}) => (
   <WelcomeScreenStack.Navigator>
@@ -316,6 +320,7 @@ const WelcomeStackScreen = ({navigation}) => (
                                   }}/>
                                 </HowtoGuideDetailsEditStack.Navigator>
                                 );
+
                                 const CalendarStackScreen = ({navigation}) => (
                           <CalendarScreenStack.Navigator>
                             <CalendarScreenStack.Screen name="CalendarScreen" component={CalendarScreen} options={{
@@ -329,6 +334,34 @@ const WelcomeStackScreen = ({navigation}) => (
                             }}/>
                           </CalendarScreenStack.Navigator>
                           );
+
+                          const ClubStackDetails= ({navigation}) => (
+                            <ClubDetailsStack.Navigator>
+                              <ClubDetailsStack.Screen name="ClubDetails" component={ClubDetails} options={{
+                                headerShown: true,
+                                headerTransparent: true,
+                                title: '',
+                                headerLeft: () => (
+                                <Icon name='ios-menu' size = {25}
+                                onPress={() => {navigation.openDrawer()}}></Icon>
+                                )
+                              }}/>
+                            </ClubDetailsStack.Navigator>
+                            );
+
+                            const CreateReminderStackScreen = ({navigation}) => (
+                              <CreateReminderStack.Navigator>
+                                <CreateReminderStack.Screen name="CreateReminder" component={CreateReminder} options={{
+                                  headerShown: true,
+                                  headerTransparent: true,
+                                  title: '',
+                                  headerLeft: () => (
+                                  <Icon name='ios-menu' size = {25}
+                                  onPress={() => {navigation.openDrawer()}}></Icon>
+                                  )
+                                }}/>
+                              </CreateReminderStack.Navigator>
+                              );
 
 const App = () => {
 
@@ -357,6 +390,9 @@ const App = () => {
         <Drawer.Screen name="HowtoGuideDetails" component={HowtoGuideDetailsStackScreen} />
         <Drawer.Screen name="HowtoGuideDetailsEdit" component={HowtoGuideDetailsEditStackScreen} />
         <Drawer.Screen name="CalendarScreen" component={CalendarStackScreen} />
+        <Drawer.Screen name="ClubDetails" component={ClubStackDetails} />
+        <Drawer.Screen name="CreateReminder" component={CreateReminderStackScreen} />
+
 
       </Drawer.Navigator>
     </NavigationContainer>

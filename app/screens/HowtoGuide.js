@@ -12,7 +12,7 @@ function HowtoGuide({navigation, props}) {
     const [loading, setLoading] = useState(true);
 
     const loadData = () => {
-      fetch("http://192.168.1.13:3000/getforum" ,{
+      fetch("http://10.169.8.10:3000/getforum" ,{
           method : "GET"
       })
       .then(resp => resp.json())

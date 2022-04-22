@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ImageBackground, FlatList, ScrollView, StyleSheet, View, Image, Text, Platform, Dimensions, Keyboard,  TouchableWithoutFeedback, Alert} from 'react-native';
 import colors from '../config/colors';
 import Screen from '../components/Screen';
-
+import DatePicker from 'react-native-date-picker'
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Card, FAB, TextInput, Button} from 'react-native-paper';
 import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
@@ -18,15 +18,12 @@ function CreateForum({props, navigation}) {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [rating, setRating] = useState(0);
+    const [date, setDate] = useState(0);
 
-    const ratingChanged = (newRating) => {
-      console.log(newRating)
-      setRating(newRating)
-    }
+    
 
     const insertData = () => {
-      fetch("http://10.169.8.10:3000/addforum" ,{
+      fetch("http://10.169.8.10:3000/addreminder" ,{
           method : "POST",
           headers: {
               "Content-Type": "application/json"
@@ -34,7 +31,7 @@ function CreateForum({props, navigation}) {
           body: JSON.stringify({
               "title": title,
               "description": description,
-              "rating": rating,
+              "date": date,
               "user_email": "mba26"
       })
     })
@@ -43,19 +40,19 @@ function CreateForum({props, navigation}) {
           if (response.status == 200) {
           Alert.alert(
           "Success",
-          "Forum Posted!",
+          "Reminder Posted!",
           [
             { text: "OK", onPress: () => console.log("OK Pressed") }
           ]
         );
 
-        navigation.navigate("HowtoGuide")
+        navigation.navigate("CalendarScreen")
         }
 
         else{
         Alert.alert(
         "Error",
-        "An Error Occured while posting to the forum, Please try again.",
+        "An Error Occured while posting to the calendar, Please try again.",
         [
           { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
@@ -85,7 +82,7 @@ function CreateForum({props, navigation}) {
             >
             </Image>
 
-
+            <ScrollView></ScrollView>
 
             <View style = {styles.container}>
 
@@ -109,6 +106,25 @@ function CreateForum({props, navigation}) {
               activeOutlineColor = "darkblue"
               selectionColor = "blue"
             />
+
+            <TextInput style = {styles.txtinput}
+              label = "Date in the format yyyy-mm-dd"
+              value = {description}
+              mode = "outlined"
+              multiline
+              maxHeight = {Dimensions.get('window').height - 450}
+              numberOfLines= {10}
+              onChangeText = {text => setDescription(text)}
+              activeOutlineColor = "darkblue"
+              selectionColor = "blue"
+            />
+
+            <DatePicker 
+            label = "Date"
+            date={date} 
+            onDateChange={setDate}
+            activeOutlineColor = "darkblue"
+            selectionColor = "blue" />
 
             <Button
             style = {{margin: 10, borderRadius: 15,}}

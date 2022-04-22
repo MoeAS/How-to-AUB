@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, Button, Text, TouchableOpacity, Alert} from 'react-native';
+import {StyleSheet, View, Button, Text, TouchableOpacity, Alert, Dimensions} from 'react-native';
 import {Agenda, DateData, AgendaEntry, AgendaSchedule} from 'react-native-calendars';
-import {Card, Avatar} from 'react-native-paper';
+import {Card, Avatar, FAB} from 'react-native-paper';
 
 
-function CalendarScreen(props) {
+function CalendarScreen({props, navigation}) {
 
     const [items, setItems] = useState({});
     // const [data, setData] = useState(['{"key": "value"}']);
@@ -106,7 +106,18 @@ function CalendarScreen(props) {
                 
                 
             />
+
+            <FAB
+              style = {styles.fab}
+              small = {false}
+              icon = "plus"
+              theme = {{colors:{accent: "blue"}}}
+              onPress = {() => navigation.navigate("CreateReminder")}
+            />
+
         </View>
+
+        
     );
 }
 
@@ -114,6 +125,14 @@ const styles = StyleSheet.create({
     calendar:{
         flex: 1,
     },
+    fab: {
+        position: 'absolute',
+        margin:16,
+        left: 0,
+        bottom: Dimensions.get('window').height - Dimensions.get('window').width - 370,
+        
+      },
+  
 })
 
 export default CalendarScreen;
