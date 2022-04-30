@@ -1,3 +1,4 @@
+from ftplib import all_errors
 from logging import exception
 
 from flask import Flask, request, jsonify
@@ -22,8 +23,26 @@ CORS(app)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
 
-from model.user import User, user_schema
+#from model.user import User, user_schema
+class User(db.Model):
 
+    user_email = db.Column(db.String(30), primary_key=True)
+    user_name = db.Column(db.String(30), unique=True)
+    hashed_password = db.Column(db.String(128))
+
+    def __init__(self, user_email, user_name, password):
+        super(User, self).__init__(user_email=user_email)
+        super(User, self).__init__(user_name=user_name)
+        self.hashed_password = bcrypt.generate_password_hash(password)
+
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("user-email", "user_name", "hashed_password")
+        model = User
+
+
+user_schema = UserSchema()
 
 
 class Club(db.Model):
@@ -119,6 +138,33 @@ class ForumSchema(ma.Schema):
 
 forum_schema = ForumSchema()
 forums_schema = ForumSchema(many=True)
+
+class Reminder(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_email = db.Column(db.String(30))
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text())
+    
+    date = db.Column(db.Date)
+
+    def __init__(self, user_email, title, description, date):
+        #super(Forum, self).__init__(id=id)
+        super(Reminder, self).__init__(user_email=user_email)
+        super(Reminder, self).__init__(title=title)
+        super(Reminder, self).__init__(description=description)
+        super(Reminder, self).__init__(date=date)
+        #super(Forum, self).__init__(date=date)
+
+
+class ReminderSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "user_email", "title", "description", "date")
+        model = Reminder
+
+
+reminder_schema = ReminderSchema()
+reminders_schema = ReminderSchema(many=True)
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -224,6 +270,12 @@ def clubs():
     all_clubs = Club.query.all()
     return jsonify(clubs_schema.dump(all_clubs))
 
+@app.route('/reminders', methods=['GET'])
+def reminders():
+    print(request)
+    all_reminders = Reminder.query.all()
+    return jsonify(reminders_schema.dump(all_reminders))
+
 @app.route('/courses', methods=['GET'])
 def courses():
     print(request)
@@ -243,3 +295,37 @@ def depts():
     print(request)
     all_depts = Course.query.with_entities(Course.course_dept).distinct()
     return jsonify(courses_schema.dump(all_depts))
+
+@app.route('/addreminder', methods=['POST'])
+def addreminder():
+    print(request)
+
+    user_email = request.json['user_email']
+    title = request.json['title']
+    description = request.json['description']
+    date = request.json['date']
+    temp = date.split('T')
+    date = temp[0]
+    reminders = Reminder(user_email, title, description, date)
+
+    db.session.add(reminders)
+    db.session.commit()
+
+    all_reminders = Reminder.query.all()
+    return jsonify(reminders_schema.dump(all_reminders))
+
+@app.route('/interest', methods=['GET'])
+def interest():
+    print(request)
+    all_interests = Club.query.with_entities(Club.club_area).distinct()
+    print(all_interests)
+    return jsonify(clubs_schema.dump(all_interests))
+
+@app.route('/alerts', methods=['GET'])
+def alerts():
+    START_DATE = datetime.datetime.now()
+    END_DATE = datetime.datetime.now() + datetime.timedelta(days=3)
+    print(request)
+    all_reminders = Reminder.query.filter(Reminder.date.between(START_DATE, END_DATE)).all()
+    return jsonify(reminders_schema.dump(all_reminders))
+    
