@@ -8,7 +8,10 @@ import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
 import StarRating from 'react-native-star-rating';
 
-function CreateForum({props, navigation}) {
+function CreateForum({route, navigation}) {
+
+  const reminders = route.params.reminders;
+
 
   const DismissKeyboard = ({ children }) => (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -18,12 +21,23 @@ function CreateForum({props, navigation}) {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState(0);
-
+    const [date, setDate] = useState(new Date());
     
 
+    const [reminder, setReminder] = useState([]);
+
+
     const insertData = () => {
-      fetch("http://10.169.8.10:3000/addreminder" ,{
+
+      const reminder = {"title": title,
+      "description": description,
+      "date": date,
+      "user_email": "mba26@mail.aub.edu"};
+      console.log("a3333333")
+      console.log(reminder);
+      reminders.push(reminder);
+
+      fetch("http://192.168.43.57:3000/addreminder" ,{
           method : "POST",
           headers: {
               "Content-Type": "application/json"
@@ -32,10 +46,11 @@ function CreateForum({props, navigation}) {
               "title": title,
               "description": description,
               "date": date,
-              "user_email": "mba26"
+              "user_email": "mba26@mail.aub.edu"
       })
     })
       .then((response) => {
+          response.json()
           console.log(response.status)
           if (response.status == 200) {
           Alert.alert(
@@ -46,7 +61,8 @@ function CreateForum({props, navigation}) {
           ]
         );
 
-        navigation.navigate("CalendarScreen")
+        
+
         }
 
         else{
@@ -58,10 +74,14 @@ function CreateForum({props, navigation}) {
         ]
       );
       }
+      navigation.navigate("CalendarScreen", {screen: 'CalendarScreen', params: {reminders: reminders}} )
 
         })
+      
+      
       .catch(error => console.log(error))
 
+      
     }
 
     return (
@@ -73,19 +93,12 @@ function CreateForum({props, navigation}) {
         >
 
 
+<ScrollView style = {styles.scroll}>
 
-
-            <View style = {styles.logocontent}>
-
-            <Image source = {require("../assets/HowToIcon.png")}
-            //style = {styles.logo}
-            >
-            </Image>
-
-            <ScrollView></ScrollView>
-
+            
+            
             <View style = {styles.container}>
-
+            
             <TextInput style = {styles.txtinput}
               label = "Title"
               value = {title}
@@ -94,7 +107,9 @@ function CreateForum({props, navigation}) {
               activeOutlineColor = "darkblue"
               selectionColor = "blue"
             />
+            
 
+            
             <TextInput style = {styles.txtinput}
               label = "Description"
               value = {description}
@@ -106,38 +121,26 @@ function CreateForum({props, navigation}) {
               activeOutlineColor = "darkblue"
               selectionColor = "blue"
             />
+            
 
-            <TextInput style = {styles.txtinput}
-              label = "Date in the format yyyy-mm-dd"
-              value = {description}
-              mode = "outlined"
-              multiline
-              maxHeight = {Dimensions.get('window').height - 450}
-              numberOfLines= {10}
-              onChangeText = {text => setDescription(text)}
-              activeOutlineColor = "darkblue"
-              selectionColor = "blue"
-            />
-
-            <DatePicker 
-            label = "Date"
-            date={date} 
-            onDateChange={setDate}
-            activeOutlineColor = "darkblue"
-            selectionColor = "blue" />
+            
+            <View style= {styles.date}>
+            <DatePicker date={date} onDateChange={setDate} />
+            </View>
 
             <Button
-            style = {{margin: 10, borderRadius: 15,}}
+            style = {{margin: 20, borderRadius: 15,}}
             icon = "pencil"
             mode = "contained"
             color = "yellow"
             onPress = {() => {insertData()}}
             >Post</Button>
 
-            </View>
-
-
 </View>
+            
+
+
+</ScrollView>
 
         </ImageBackground>
 
@@ -152,13 +155,40 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    scroll:{
+      flex: 1,
+      
+    },
+    container: {
+      top: 80,
+      flex: 1,
+      height: 900,
 
-    txtinput:{
+  },
+    date:{
+      width: Dimensions.get('window').width - 50,
+      marginTop: 20,
+      left: 25,
+      borderRadius: 20,
+    },
+    input:{
+      
       padding: 10,
-      width: Dimensions.get('window').width - 20,
-      borderRadius: 10,
-      overflow:"hidden"
+      marginTop: 20,
+      width: Dimensions.get('window').width - 30,
+      borderRadius: 50,
+      borderWidth: 2,
+      backgroundColor: colors.white,
 
+    },
+
+    txtinput: {
+      margin: 10,
+      width: Dimensions.get('window').width - 50,
+      borderRadius: 10,
+      backgroundColor: colors.white,
+      overflow:"hidden"
+      
     },
 
     fab: {
@@ -168,12 +198,7 @@ const styles = StyleSheet.create({
       bottom: Dimensions.get('window').height - Dimensions.get('window').width - 270,
     },
 
-    container: {
-        top: 40,
-        flex: 1,
-        height: 400,
-
-    },
+    
     text:{
         color: colors.white,
         fontSize : 15,
@@ -193,7 +218,7 @@ const styles = StyleSheet.create({
 
         alignItems: "center",
         width: Dimensions.get('window').width,
-
+        top: 60,
         left: 0,
     },
     card:{

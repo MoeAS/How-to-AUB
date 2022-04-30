@@ -10,9 +10,10 @@ import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Card
 function HowtoGuide({navigation, props}) {
     const [forums, setForums] = useState([]);
     const [loading, setLoading] = useState(true);
+    
 
     const loadData = () => {
-      fetch("http://10.169.8.10:3000/getforum" ,{
+      fetch("http://192.168.43.57:3000/getforum" ,{
           method : "GET"
       })
       .then(resp => resp.json())

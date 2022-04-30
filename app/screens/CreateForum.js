@@ -26,7 +26,7 @@ function CreateForum({props, navigation}) {
     }
 
     const insertData = () => {
-      fetch("http://10.169.8.10:3000/addforum" ,{
+      fetch("http://192.168.43.57:3000/addforum" ,{
           method : "POST",
           headers: {
               "Content-Type": "application/json"

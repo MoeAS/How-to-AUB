@@ -33,6 +33,7 @@ import ClubDetails from './app/screens/ClubDetails';
 import HowtoGuideDetails from './app/screens/HowtoGuideDetails';
 import HowtoGuideDetailsEdit from './app/screens/HowtoGuideDetailsEdit';
 import HowtoGuide from './app/screens/HowtoGuide';
+import AlertsScreen from './app/screens/AlertsScreen';
 import CreateForum from './app/screens/CreateForum';
 import CreateReminder from './app/screens/CreateReminder';
 import CalendarScreen from './app/screens/CalendarScreen';
@@ -41,7 +42,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { WebView } from 'react-native-webview';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/Ionicons';
 import { DrawerContent } from './app/components/DrawerContent';
 
 
@@ -99,6 +100,7 @@ const HowtoGuideDetailsEditStack = createNativeStackNavigator();
 const CalendarScreenStack = createNativeStackNavigator();
 const ClubDetailsStack = createNativeStackNavigator();
 const CreateReminderStack = createNativeStackNavigator();
+const AlertsScreenStack = createNativeStackNavigator();
 
 const WelcomeStackScreen = ({navigation}) => (
   <WelcomeScreenStack.Navigator>
@@ -363,6 +365,20 @@ const WelcomeStackScreen = ({navigation}) => (
                               </CreateReminderStack.Navigator>
                               );
 
+                              const AlertsStackScreen = ({navigation}) => (
+                                <AlertsScreenStack.Navigator>
+                                  <AlertsScreenStack.Screen name="Alerts" component={AlertsScreen} options={{
+                                    headerShown: true,
+                                    headerTransparent: true,
+                                    title: '',
+                                    headerLeft: () => (
+                                    <Icon name='ios-menu' size = {25}
+                                    onPress={() => {navigation.openDrawer()}}></Icon>
+                                    )
+                                  }}/>
+                                </AlertsScreenStack.Navigator>
+                                );
+
 const App = () => {
 
   return (
@@ -392,6 +408,7 @@ const App = () => {
         <Drawer.Screen name="CalendarScreen" component={CalendarStackScreen} />
         <Drawer.Screen name="ClubDetails" component={ClubStackDetails} />
         <Drawer.Screen name="CreateReminder" component={CreateReminderStackScreen} />
+        <Drawer.Screen name="AlertsScreen" component={AlertsStackScreen} />
 
 
       </Drawer.Navigator>

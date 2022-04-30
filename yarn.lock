@@ -7102,6 +7102,11 @@
   dependencies:
     "lodash" "^4.17.15"
 
+"react-native-read-more-text@^1.1.2":
+  "integrity" "sha512-FIQhOpvikUanwPRl9QVBYmx6Wx7IXxXH/jlzElOLcP+NSgFLw2fRzSekQUq0yicymZsi7cAWW5TtIj8FHWtNDw=="
+  "resolved" "https://registry.npmjs.org/react-native-read-more-text/-/react-native-read-more-text-1.1.2.tgz"
+  "version" "1.1.2"
+
 "react-native-reanimated@^2.4.1", "react-native-reanimated@>= 1.0.0":
   "integrity" "sha512-kvf7ylGlwa5hxMQ+wpPFjQrI2c6eexf53/xRo+dvXBNefGmSYaYR5sFtD0XMMzIPQlkCB9tJ0Pu9+2WCQUY7Cg=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.4.1.tgz"

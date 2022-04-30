@@ -109,6 +109,18 @@ export function DrawerContent(props){
                 <DrawerItem
                 icon = {({color, size}) => (
                   <Icon
+                  name = "map"
+                  color = {color}
+                  size = {size}
+                  />
+                )}
+                label = "Notifications"
+                onPress={() => {props.navigation.navigate('AlertsScreen')}}
+                />
+
+                <DrawerItem
+                icon = {({color, size}) => (
+                  <Icon
                   name = "settings-helper"
                   color = {color}
                   size = {size}

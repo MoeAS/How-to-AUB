@@ -4,11 +4,14 @@ import {Agenda, DateData, AgendaEntry, AgendaSchedule} from 'react-native-calend
 import {Card, Avatar, FAB} from 'react-native-paper';
 
 
-function CalendarScreen({props, navigation}) {
+function CalendarScreen({route, navigation}) {
 
+    const reminders = route.params.reminders;
+    console.log(reminders);
     const [items, setItems] = useState({});
     // const [data, setData] = useState(['{"key": "value"}']);
-
+    const reminder = route.params.reminder;
+    console.log(reminder)
     // useEffect(() => {
     //     fetch("http://172.20.10.2:3000/reminders" ,{
     //         method : "GET"
@@ -17,13 +20,32 @@ function CalendarScreen({props, navigation}) {
     //     .then(data => {setData(data)})
     // }, [data]
 
+    if (reminder === undefined || reminder == {}){
+      
+    }
+    else{
+      console.log("cow");
+      reminders.push(reminder);
+      console.log(reminders);
+    }
+
     // );
     
-    const data = [{"reminder_date": "2022-04-18", "reminder_desc": "this assignment consists of 3 hard problems so start earlier", "reminder_name": "EECE331 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 5 hard problems so start earlier", "reminder_name": "EECE332 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 8 hard problems so start earlier", "reminder_name": "EECE334 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "your midterm is today", "reminder_name": "EECE490 Exam", "user_email": "sre17@mail.aub.edu"}];
-    
-    
-    
-    
+    //const data = [{"reminder_date": "2022-04-18", "reminder_desc": "this assignment consists of 3 hard problems so start earlier", "reminder_name": "EECE331 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 5 hard problems so start earlier", "reminder_name": "EECE332 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 8 hard problems so start earlier", "reminder_name": "EECE334 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "your midterm is today", "reminder_name": "EECE490 Exam", "user_email": "sre17@mail.aub.edu"}];
+    const data = [];
+
+    // const [reminders, setReminders] = useState([{"date": "", "description": "", "id": 8, "title": "", "user_email": ""}]);
+
+    // useEffect(() => {
+    //     fetch("http://192.168.2.145:3000/reminders" ,{
+    //         method : "GET"
+    //     })
+    //     .then(resp => resp.json())
+    //     .then(reminders => {setReminders(reminders)})
+    // }, [reminders]
+
+    // );
+     
     
     
     
@@ -50,13 +72,13 @@ function CalendarScreen({props, navigation}) {
                 
                 //const numItems = Math.floor(Math.random() * 3 + 1);
                 
-                for (let j = 0; j < data.length; j++) {
+                for (let j = 0; j < reminders.length; j++) {
                     console.log(strTime)
-                    if(data[j]["reminder_date"] == strTime){
+                    if(reminders[j]["date"] == strTime){
                         
                         items[strTime].push({
-                        name: data[j]["reminder_name"],
-                        desc : data[j]["reminder_desc"],
+                        name: reminders[j]["title"],
+                        desc : reminders[j]["description"],
                         height: Math.max(50, Math.floor(Math.random() * 150)),
                         });
                     }
@@ -96,12 +118,12 @@ function CalendarScreen({props, navigation}) {
     };
 
     return (
-        <View style = {styles.calendar}>
+        <View style = {styles.calendar} >
             <Agenda
                 
                 items={items}
                 loadItemsForMonth={loadItems}
-                selected={'2022-04-18'}
+                selected={'2022-05-01'}
                 renderItem={renderItem}
                 
                 
@@ -112,7 +134,7 @@ function CalendarScreen({props, navigation}) {
               small = {false}
               icon = "plus"
               theme = {{colors:{accent: "blue"}}}
-              onPress = {() => navigation.navigate("CreateReminder")}
+              onPress = {() => navigation.navigate("CreateReminder", {screen: 'CreateReminder', params: {reminders: reminders}})}
             />
 
         </View>

@@ -39,11 +39,11 @@ function CourseDetails({route, navigation}) {
                 
 
                 <View style = {styles.name}>
-                    <Text style = {styles.text_name}>Course Name: {data.item.club_name}</Text>
+                    <Text style = {styles.text_name}>Club Name: {data.item.club_name}</Text>
                 </View>
 
                 <View style = {styles.desc}>
-                    <Text style = {styles.text}> Course Description: {data.item.club_description}</Text>
+                    <Text style = {styles.text}> Club Description: {data.item.club_description}</Text>
                 </View>
 
                 

@@ -18,7 +18,7 @@ function CoursesScreen({props, navigation}) {
     const [prerequisite, setPrerequisite] = useState([]);
 
     useEffect(() => {
-        fetch("http://10.169.8.10:3000/courses" ,{
+        fetch("http://192.168.43.57:3000/courses" ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -30,7 +30,7 @@ function CoursesScreen({props, navigation}) {
 
 
     useEffect(() => {
-        fetch("http://10.169.8.10:3000/depts" ,{
+        fetch("http://192.168.2.145:3000/depts" ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -40,7 +40,7 @@ function CoursesScreen({props, navigation}) {
     );
 
     useEffect(() => {
-        fetch("http://10.169.8.10:3000/prerequisite" ,{
+        fetch("http://192.168.2.145:3000/prerequisite" ,{
             method : "GET"
         })
         .then(resp => resp.json())

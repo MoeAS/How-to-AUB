@@ -31,7 +31,7 @@ function HowtoGuideDetails({props, route, navigation}) {
     }
 
     const deleteData = () => {
-      fetch(`http://10.169.8.10:3000/deleteforum/${forums.id}/` ,{
+      fetch(`http://192.168.43.57:3000/deleteforum/${forums.id}/` ,{
           method : "DELETE",
           headers: {
               "Content-Type": "application/json"

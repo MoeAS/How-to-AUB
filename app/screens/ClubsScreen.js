@@ -18,7 +18,7 @@ function ClubsScreen({props, navigation}) {
     const [clubs, setClubs] = useState([]);
 
     useEffect(() => {
-        fetch("http://10.169.8.10:3000/clubs" ,{
+        fetch("http://192.168.43.57:3000/clubs" ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -28,7 +28,7 @@ function ClubsScreen({props, navigation}) {
     );
 
     useEffect(() => {
-        fetch("http://10.169.8.10:3000/interest" ,{
+        fetch("http://192.168.43.57:3000/interest" ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -38,8 +38,9 @@ function ClubsScreen({props, navigation}) {
     );
 
     for (let j = 0; j < interest.length; j++) {
-        data.push(dept[j]["interest_area"])
+        data.push(interest[j]["club_area"])
     }
+    console.log(data)
     clubs_filtered = []
 
 
@@ -49,7 +50,7 @@ function ClubsScreen({props, navigation}) {
             clubs_filtered = clubs;
         }
         for (let i = 0; i< clubs.length; i++){
-            if (clubs[i]["interest_area"] == selected){
+            if (clubs[i]["club_area"] == selected){
                 clubs_filtered.push(clubs[i]);
             }
         }
@@ -116,7 +117,7 @@ function ClubsScreen({props, navigation}) {
 
                 <View style = {styles.container}  >
                     <FlatList
-                        data = {clubs}
+                        data = {clubs_filtered}
                         renderItem = {(data) =>
                             <View style = {styles.courses}>
                                 <View style={styles.row1}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { ImageBackground, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 
 import AppButton from '../components/AppButton';
@@ -7,6 +7,18 @@ import LoginAfter from './LoginAfter';
 import colors from '../config/colors';
 
 function HomeGuide({props, navigation}) {
+
+    const [reminders, setReminders] = useState();
+
+    useEffect(() => {
+        fetch("http://192.168.43.57:3000/reminders" ,{
+            method : "GET"
+        })
+        .then(resp => resp.json())
+        .then(reminders => {setReminders(reminders)})
+    }, []
+
+    );
 
     return (
         <ImageBackground
@@ -30,7 +42,7 @@ function HomeGuide({props, navigation}) {
                     onPress={() => navigation.navigate("Clubs")}
                     ></AppButton>
                     <AppButton title = "Volunteering" color = "darkgray" textcolor = "white"
-                    onPress={() => navigation.navigate("CalendarScreen")}
+                    onPress={() => navigation.navigate("CalendarScreen",{screen: 'CalendarScreen', params: {reminders: reminders}})}
                     ></AppButton>
                     <AppButton title = "Workshops" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("Courses")}

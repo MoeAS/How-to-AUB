@@ -29,7 +29,7 @@ function HowtoGuideDetailsEdit({props, route, navigation}) {
     }
 
     const updateData = () => {
-      fetch(`http://10.169.8.10:3000/updateforum/${forums.id}/` ,{
+      fetch(`http://192.168.43.57:3000/updateforum/${forums.id}/` ,{
           method : "PUT",
           headers: {
               "Content-Type": "application/json"
