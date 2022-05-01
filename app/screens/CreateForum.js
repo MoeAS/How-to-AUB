@@ -8,6 +8,8 @@ import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
 import StarRating from 'react-native-star-rating';
 
+import config from "../config/config.json"
+
 function CreateForum({props, navigation}) {
 
   const DismissKeyboard = ({ children }) => (
@@ -26,7 +28,7 @@ function CreateForum({props, navigation}) {
     }
 
     const insertData = () => {
-      fetch("http://192.168.1.13:3000/addforum" ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/addforum` ,{
           method : "POST",
           headers: {
               "Content-Type": "application/json"

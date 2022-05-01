@@ -7,12 +7,14 @@ import { useRoute } from '@react-navigation/native';
 
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Card, FAB} from 'react-native-paper';
 
+import config from "../config/config.json"
+
 function HowtoGuide({navigation, props}) {
     const [forums, setForums] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const loadData = () => {
-      fetch("http://192.158.1.13:3000/getforum" ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/getforum` ,{
           method : "GET"
       })
       .then(resp => resp.json())

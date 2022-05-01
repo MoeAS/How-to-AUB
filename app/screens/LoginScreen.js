@@ -17,6 +17,8 @@ import { UserInterfaceIdiom } from 'expo-constants';
 import {useDispatch, useSelector} from "react-redux";
 import { fetchingClubs } from '../../actions/fetchingClubs';
 
+import config from "../config/config.json"
+
 const DismissKeyboard = ({ children }) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
     {children}
@@ -36,7 +38,7 @@ function LoginScreen({props, navigation}) {
     const headers = {"Content-type" : "application/json"};
 
     const signin = () => {
-        fetch('http://192.168.1.14:3000/signin', {
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/signin`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

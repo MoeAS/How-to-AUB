@@ -6,6 +6,8 @@ import colors from '../config/colors';
 import Swiper from 'react-native-web-swiper';
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Card, FAB, TextInput, Button} from 'react-native-paper';
 
+import config from "../config/config.json"
+
 function HomePage({props, navigation}) {
     return (
 

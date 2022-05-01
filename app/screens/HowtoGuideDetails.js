@@ -7,7 +7,9 @@ import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch, Card
 import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
 import StarRating from 'react-native-star-rating';
-import HowtoGuide from './HowtoGuide'
+import HowtoGuide from './HowtoGuide';
+
+import config from "../config/config.json";
 
 
 function HowtoGuideDetails({props, route, navigation}) {
@@ -32,7 +34,7 @@ function HowtoGuideDetails({props, route, navigation}) {
     }
 
     const deleteData = () => {
-      fetch(`http://192.158.1.13:3000/deleteforum/${forums.id}/` ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/deleteforum/${forums.id}/` ,{
           method : "DELETE",
           headers: {
               "Content-Type": "application/json"
@@ -68,7 +70,7 @@ function HowtoGuideDetails({props, route, navigation}) {
     }
 
     const loadData = () => {
-      fetch(`http://192.158.1.13:3000/getforum/${forums.id}/` ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/getforum/${forums.id}/` ,{
           method : "GET"
       })
       .then(resp => resp.json())
@@ -88,7 +90,7 @@ function HowtoGuideDetails({props, route, navigation}) {
 
     const rateData = (rating) => {
       console.log(rating)
-      fetch(`http://192.158.1.13:3000/rateforum/${forums.id}/` ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/rateforum/${forums.id}/` ,{
           method : "PUT",
           headers: {
               "Content-Type": "application/json"

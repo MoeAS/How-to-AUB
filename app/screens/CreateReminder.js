@@ -8,6 +8,8 @@ import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
 import StarRating from 'react-native-star-rating';
 
+import config from "../config/config.json"
+
 function CreateForum({route, navigation}) {
 
   const reminders = route.params.reminders;
@@ -22,7 +24,7 @@ function CreateForum({route, navigation}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState(new Date());
-    
+
 
     const [reminder, setReminder] = useState([]);
 
@@ -37,7 +39,7 @@ function CreateForum({route, navigation}) {
       console.log(reminder);
       reminders.push(reminder);
 
-      fetch("http://192.168.43.57:3000/addreminder" ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/addreminder` ,{
           method : "POST",
           headers: {
               "Content-Type": "application/json"
@@ -61,7 +63,7 @@ function CreateForum({route, navigation}) {
           ]
         );
 
-        
+
 
         }
 
@@ -77,11 +79,11 @@ function CreateForum({route, navigation}) {
       navigation.navigate("CalendarScreen", {screen: 'CalendarScreen', params: {reminders: reminders}} )
 
         })
-      
-      
+
+
       .catch(error => console.log(error))
 
-      
+
     }
 
     return (
@@ -95,10 +97,10 @@ function CreateForum({route, navigation}) {
 
 <ScrollView style = {styles.scroll}>
 
-            
-            
+
+
             <View style = {styles.container}>
-            
+
             <TextInput style = {styles.txtinput}
               label = "Title"
               value = {title}
@@ -107,9 +109,9 @@ function CreateForum({route, navigation}) {
               activeOutlineColor = "darkblue"
               selectionColor = "blue"
             />
-            
 
-            
+
+
             <TextInput style = {styles.txtinput}
               label = "Description"
               value = {description}
@@ -121,9 +123,9 @@ function CreateForum({route, navigation}) {
               activeOutlineColor = "darkblue"
               selectionColor = "blue"
             />
-            
 
-            
+
+
             <View style= {styles.date}>
             <DatePicker date={date} onDateChange={setDate} />
             </View>
@@ -137,7 +139,7 @@ function CreateForum({route, navigation}) {
             >Post</Button>
 
 </View>
-            
+
 
 
 </ScrollView>
@@ -157,7 +159,7 @@ const styles = StyleSheet.create({
     },
     scroll:{
       flex: 1,
-      
+
     },
     container: {
       top: 80,
@@ -172,7 +174,7 @@ const styles = StyleSheet.create({
       borderRadius: 20,
     },
     input:{
-      
+
       padding: 10,
       marginTop: 20,
       width: Dimensions.get('window').width - 30,
@@ -188,7 +190,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       backgroundColor: colors.white,
       overflow:"hidden"
-      
+
     },
 
     fab: {
@@ -198,7 +200,7 @@ const styles = StyleSheet.create({
       bottom: Dimensions.get('window').height - Dimensions.get('window').width - 270,
     },
 
-    
+
     text:{
         color: colors.white,
         fontSize : 15,

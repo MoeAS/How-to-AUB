@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ImageBackground, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 
 import AppButton from '../components/AppButton';
@@ -6,12 +6,14 @@ import LoginAfter from './LoginAfter';
 
 import colors from '../config/colors';
 
+import config from "../config/config.json"
+
 function HomeGuide({props, navigation}) {
 
   const [reminders, setReminders] = useState();
 
   useEffect(() => {
-      fetch("http://192.168.1.13:3000/reminders" ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/reminders` ,{
           method : "GET"
       })
       .then(resp => resp.json())

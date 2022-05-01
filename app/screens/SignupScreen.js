@@ -15,6 +15,8 @@ import { signUp } from '../../actions/authentication';
 import {useDispatch} from "react-redux";
 import { useEffect } from 'react';
 
+import config from "../config/config.json"
+
 
 
 const DismissKeyboard = ({ children }) => (
@@ -41,7 +43,7 @@ function SignupScreen({props, navigation}) {
 
     const signUp = () => {
         if(confirmpass == password){
-          fetch('http://192.168.1.14:3000/signup', {
+          fetch(`http://${config.IP_ADDRESS}:${config.PORT}/signup`, {
               method: 'POST',
               headers: {
                 "Content-type" : "application/json"
@@ -66,6 +68,36 @@ function SignupScreen({props, navigation}) {
           );
 
           navigation.navigate("LoginScreen")
+          }
+
+          else if (response.status == 401) {
+            Alert.alert(
+            "Error",
+            "Enter email or password",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+
+          else if (response.status == 402) {
+            Alert.alert(
+            "Error",
+            "Invalid username",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
+          }
+
+          else if (response.status == 403) {
+            Alert.alert(
+            "Error",
+            "Enter username",
+            [
+              { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+          );
           }
 
           else {

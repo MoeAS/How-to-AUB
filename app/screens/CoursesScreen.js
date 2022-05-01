@@ -8,6 +8,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from 'react-native-paper';
 
+import config from "../config/config.json"
+
 import CourseField from '../components/CourseField';
 function CoursesScreen({props, navigation}) {
 
@@ -18,7 +20,7 @@ function CoursesScreen({props, navigation}) {
     const [prerequisite, setPrerequisite] = useState([]);
 
     useEffect(() => {
-        fetch("http://192.168.43.57:3000/courses" ,{
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/courses` ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -30,7 +32,7 @@ function CoursesScreen({props, navigation}) {
 
 
     useEffect(() => {
-        fetch("http://192.168.2.145:3000/depts" ,{
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/depts` ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -40,7 +42,7 @@ function CoursesScreen({props, navigation}) {
     );
 
     useEffect(() => {
-        fetch("http://192.168.2.145:3000/prerequisite" ,{
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/prerequisite` ,{
             method : "GET"
         })
         .then(resp => resp.json())

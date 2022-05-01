@@ -8,6 +8,8 @@ import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from
 import SelectDropdown from 'react-native-select-dropdown';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import config from "../config/config.json"
+
 
 
 function ClubsScreen({props, navigation}) {
@@ -18,7 +20,7 @@ function ClubsScreen({props, navigation}) {
     const [clubs, setClubs] = useState([]);
 
     useEffect(() => {
-        fetch("http://192.168.43.57:3000/clubs" ,{
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/clubs` ,{
             method : "GET"
         })
         .then(resp => resp.json())
@@ -28,7 +30,7 @@ function ClubsScreen({props, navigation}) {
     );
 
     useEffect(() => {
-        fetch("http://192.168.43.57:3000/interest" ,{
+        fetch(`http://${config.IP_ADDRESS}:${config.PORT}/interest` ,{
             method : "GET"
         })
         .then(resp => resp.json())

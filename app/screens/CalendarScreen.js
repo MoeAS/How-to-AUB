@@ -3,6 +3,8 @@ import {StyleSheet, View, Button, Text, TouchableOpacity, Alert, Dimensions} fro
 import {Agenda, DateData, AgendaEntry, AgendaSchedule} from 'react-native-calendars';
 import {Card, Avatar, FAB} from 'react-native-paper';
 
+import config from "../config/config.json"
+
 
 function CalendarScreen({route, navigation}) {
 
@@ -21,7 +23,7 @@ function CalendarScreen({route, navigation}) {
     // }, [data]
 
     if (reminder === undefined || reminder == {}){
-      
+
     }
     else{
       console.log("cow");
@@ -30,7 +32,7 @@ function CalendarScreen({route, navigation}) {
     }
 
     // );
-    
+
     //const data = [{"reminder_date": "2022-04-18", "reminder_desc": "this assignment consists of 3 hard problems so start earlier", "reminder_name": "EECE331 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 5 hard problems so start earlier", "reminder_name": "EECE332 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "this assignment consists of 8 hard problems so start earlier", "reminder_name": "EECE334 HW", "user_email": "sre17@mail.aub.edu"}, {"reminder_date": "2022-04-20", "reminder_desc": "your midterm is today", "reminder_name": "EECE490 Exam", "user_email": "sre17@mail.aub.edu"}];
     const data = [];
 
@@ -45,17 +47,17 @@ function CalendarScreen({route, navigation}) {
     // }, [reminders]
 
     // );
-     
-    
-    
-    
-    
+
+
+
+
+
     const timeToString = (time) => {
         const date = new Date(time);
         return date.toISOString().split('T')[0];
     };
-   
-      
+
+
     const loadItems = (day) => {
         const items = items || {};
         console.log(day)
@@ -65,17 +67,17 @@ function CalendarScreen({route, navigation}) {
             const time = day.timestamp + i * 24 * 60 * 60 * 1000;
             const strTime = timeToString(time);
             if (!items[strTime]) {
-                
+
                 console.log(data);
                 items[strTime] = [];
-                
-                
+
+
                 //const numItems = Math.floor(Math.random() * 3 + 1);
-                
+
                 for (let j = 0; j < reminders.length; j++) {
                     console.log(strTime)
                     if(reminders[j]["date"] == strTime){
-                        
+
                         items[strTime].push({
                         name: reminders[j]["title"],
                         desc : reminders[j]["description"],
@@ -120,13 +122,13 @@ function CalendarScreen({route, navigation}) {
     return (
         <View style = {styles.calendar} >
             <Agenda
-                
+
                 items={items}
                 loadItemsForMonth={loadItems}
                 selected={'2022-05-01'}
                 renderItem={renderItem}
-                
-                
+
+
             />
 
             <FAB
@@ -139,7 +141,7 @@ function CalendarScreen({route, navigation}) {
 
         </View>
 
-        
+
     );
 }
 
@@ -152,9 +154,9 @@ const styles = StyleSheet.create({
         margin:16,
         left: 0,
         bottom: Dimensions.get('window').height - Dimensions.get('window').width - 370,
-        
+
       },
-  
+
 })
 
 export default CalendarScreen;

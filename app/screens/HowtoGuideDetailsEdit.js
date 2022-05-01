@@ -8,6 +8,8 @@ import {Rating} from 'react-native-ratings';
 //import StarRating from 'react-native-star-rating-widget';
 import StarRating from 'react-native-star-rating';
 
+import config from "../config/config.json"
+
 function HowtoGuideDetailsEdit({props, route, navigation}) {
 
   const forums = route.params.forums
@@ -37,7 +39,7 @@ function HowtoGuideDetailsEdit({props, route, navigation}) {
 
 
     const updateData = () => {
-      fetch(`http://192.158.1.14:3000/updateforum/${forums.id}/` ,{
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/updateforum/${forums.id}/` ,{
           method : "PUT",
           headers: {
               "Content-Type": "application/json"
