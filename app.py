@@ -1,3 +1,4 @@
+from ftplib import all_errors
 from logging import exception
 
 from flask import Flask, request, jsonify
@@ -9,101 +10,164 @@ from flask import abort
 import jwt
 import datetime
 from sqlalchemy import desc
+from flask import Flask, render_template, request, redirect, url_for
+from flask_mysqldb import MySQL
+from flask_admin import Admin, expose, AdminIndexView
+from flask_admin.contrib.sqla import ModelView
+from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user
+from flask_admin.menu import MenuLink
 
 #from .db_config import DB_CONFIG
 
 
 
 app = Flask(__name__)
+app = Flask(__name__)
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = '7aMoudi72571'
+app.config['MYSQL_DB'] = 'howtoaub'
+mysql = MySQL(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:7aMoudi72571@127.0.0.1:3306/howtoaub'
+app.config['SECRET_KEY'] = 'mysecret'
 db = SQLAlchemy(app)
 
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
 CORS(app)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
 
 #from model.user import User, user_schema
 
-class User(db.Model):
+class HomeView(AdminIndexView):
 
-    user_email = db.Column(db.String(30), primary_key=True)
+    def is_visible(self):
+        # This view won't appear in the menu structure
+        return False
+
+    @expose("/")
+    def index(self):
+        return redirect(url_for('admin_authentication'))
+
+admin = Admin(app, index_view=HomeView(name='Home'))
+
+class MyModelView(ModelView):
+    column_display_pk = True
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+class LoginMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return not current_user.is_authenticated
+
+
+class LogoutMenuLink(MenuLink):
+
+    def is_accessible(self):
+        return current_user.is_authenticated
+
+admin.add_link(LogoutMenuLink(name='Logout', category='', url="/admin/logout"))
+admin.add_link(LoginMenuLink(name='Login', category='', url="/admin/login"))
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+@login_manager.user_loader
+class User(db.Model, UserMixin):
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_email = db.Column(db.String(30), unique=True)
     user_name = db.Column(db.String(30), unique=True)
     hashed_password = db.Column(db.String(128))
 
-    def __init__(self, user_email, user_name, password):
+    def __init__(self, user_email = "", user_name = "", password = "0"):
+        #super(User, self).__init__(id=id)
         super(User, self).__init__(user_email=user_email)
         super(User, self).__init__(user_name=user_name)
         self.hashed_password = bcrypt.generate_password_hash(password)
 
-
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ("user-email", "user_name", "hashed_password")
+        fields = ("id", "user-email", "user_name", "hashed_password")
         model = User
 
 
 user_schema = UserSchema()
+admin.add_view(MyModelView(User, db.session))
 
 class Club(db.Model):
 
     club_crn = db.Column(db.String(30), primary_key=True)
     club_name = db.Column(db.String(70))
     club_description = db.Column(db.Text())
+    club_area = db.Column(db.String(70))
 
-    def __init__(self, club_crn, club_name, club_description):
+    def __init__(self, club_crn, club_name, club_description, club_area):
         super(Club, self).__init__(club_crn=club_crn)
         super(Club, self).__init__(club_name=club_name)
         super(Club, self).__init__(club_description=club_description)
+        super(Club, self).__init__(club_area= club_area)
 
 
 class ClubSchema(ma.Schema):
     class Meta:
-        fields = ("club_crn", "club_name", "club_description")
+        fields = ("club_crn", "club_name", "club_description", "club_area")
         model = Club
 
 
 club_schema = ClubSchema()
 clubs_schema = ClubSchema(many=True)
+admin.add_view(MyModelView(Club, db.session))
 
 class Course(db.Model):
-
+    course_id = db.Column(db.String(70), unique=True)
     course_crn = db.Column(db.String(30), primary_key=True)
     course_name = db.Column(db.String(70))
     course_description = db.Column(db.Text())
+    course_dept = db.Column(db.String(70))
 
     def __init__(self, course_crn, course_name, course_description):
+        super(Course, self).__init__(course_id=course_id)
         super(Course, self).__init__(course_crn=course_crn)
         super(Course, self).__init__(course_name=course_name)
         super(Course, self).__init__(course_description=course_description)
-
+        super(Course, self).__init__(course_dept=course_dept)
 
 class CourseSchema(ma.Schema):
     class Meta:
-        fields = ("course_crn", "course_name", "course_description")
+        fields = ("course_id", "course_crn", "course_name", "course_description", "course_dept")
         model = Course
 
 
 course_schema = CourseSchema()
 courses_schema = CourseSchema(many=True)
+admin.add_view(MyModelView(Course, db.session))
 
 class Prerequisite(db.Model):
 
     course_crn = db.Column(db.String(30), primary_key=True)
     course_prereq = db.Column(db.String(30), primary_key=True)
+    course_pre_name = db.Column(db.String(30), unique=True)
 
-    def __init__(self, course_crn, course_prereq):
+    def __init__(self, course_crn, course_prereq, course_pre_name):
         super(Prerequisite, self).__init__(course_crn=course_crn)
         super(Prerequisite, self).__init__(course_prereq=course_prereq)
-
+        super(Prerequisite, self).__init__(course_pre_name=course_pre_name)
 
 class PrerequisiteSchema(ma.Schema):
     class Meta:
-        fields = ("course_crn", "course_prereq")
+        fields = ("course_crn", "course_prereq", "course_pre_name")
         model = Prerequisite
 
 
 prerequisite_schema = PrerequisiteSchema()
 prerequisites_schema = PrerequisiteSchema(many=True)
+admin.add_view(MyModelView(Prerequisite, db.session))
 
 
 class Forum(db.Model):
@@ -132,10 +196,42 @@ class ForumSchema(ma.Schema):
 
 forum_schema = ForumSchema()
 forums_schema = ForumSchema(many=True)
+admin.add_view(MyModelView(Forum, db.session))
+
+
+class Reminder(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_email = db.Column(db.String(30))
+    title = db.Column(db.String(100))
+    description = db.Column(db.Text())
+
+    date = db.Column(db.Date)
+
+    def __init__(self, user_email, title, description, date):
+        #super(Forum, self).__init__(id=id)
+        super(Reminder, self).__init__(user_email=user_email)
+        super(Reminder, self).__init__(title=title)
+        super(Reminder, self).__init__(description=description)
+        super(Reminder, self).__init__(date=date)
+        #super(Forum, self).__init__(date=date)
+
+
+class ReminderSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "user_email", "title", "description", "date")
+        model = Reminder
+
+
+reminder_schema = ReminderSchema()
+reminders_schema = ReminderSchema(many=True)
+#admin.add_view(MyModelView(Reminder, db.session))
 
 @app.route('/hello', methods=['GET'])
 def hello():
     return jsonify({"Hello":"World"})
+
+################################## USER SIGNIN/SIGNUP PAGES ####################
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -173,6 +269,8 @@ def signin():
     db.session.commit()
     return jsonify(user_schema.dump(user))
 
+################################## FORUMS PAGE #################################
+
 @app.route('/getforum', methods=['GET'])
 def getforum():
     print(request)
@@ -209,12 +307,12 @@ def updateforum(id):
 
     title = request.json['title']
     description = request.json['description']
-    rating = request.json['rating']
+    #rating = request.json['rating']
     #user_email = request.json['user_email']
 
     forums.title = title
     forums.description = description
-    forums.rating = rating
+    #forums.rating = rating
     #forums.user_email = user_email
 
     db.session.commit()
@@ -231,11 +329,37 @@ def deleteforum(id):
     return jsonify(forum_schema.dump(forum))
 
 
+@app.route('/rateforum/<id>/', methods=['PUT'])
+def rateforum(id):
+    print(request)
+    forums = Forum.query.get(id)
+
+    rating = request.json['rating']
+    #user_email = request.json['user_email']
+
+    forums.rating = rating
+    #forums.user_email = user_email
+
+    db.session.commit()
+
+    return jsonify(forum_schema.dump(forums))
+
+################################## CLUBS PAGE ##################################
+
 @app.route('/clubs', methods=['GET'])
 def clubs():
     print(request)
     all_clubs = Club.query.all()
     return jsonify(clubs_schema.dump(all_clubs))
+
+@app.route('/interest', methods=['GET'])
+def interest():
+    print(request)
+    all_interests = Club.query.with_entities(Club.club_area).distinct()
+    print(all_interests)
+    return jsonify(clubs_schema.dump(all_interests))
+
+################################## COURSES PAGE ################################
 
 @app.route('/courses', methods=['GET'])
 def courses():
@@ -250,9 +374,107 @@ def details():
     courses_details = Course.query.filter_by(course_crn = course_crn).all()
     return jsonify(course_schema.dump(courses_details))
 
-@app.route('/prerequisite', methods=['GET', 'POST'])
+@app.route('/prerequisite', methods=[ 'GET'])
 def prerequisite():
     print(request)
-    course_crn = request.json['course_crn']
-    courses_prerequisite = Prerequisite.query.filter_by(course_crn = course_crn).all()
+    courses_prerequisite = Prerequisite.query.all()
     return jsonify(prerequisites_schema.dump(courses_prerequisite))
+
+@app.route('/depts', methods=['GET'])
+def depts():
+    print(request)
+    all_depts = Course.query.with_entities(Course.course_dept).distinct()
+    return jsonify(courses_schema.dump(all_depts))
+
+################################## REMINDERS/CALENDARS PAGE ####################
+
+@app.route('/reminders', methods=['GET'])
+def reminders():
+    print(request)
+    all_reminders = Reminder.query.all()
+    return jsonify(reminders_schema.dump(all_reminders))
+
+@app.route('/addreminder', methods=['POST'])
+def addreminder():
+    print(request)
+
+    user_email = request.json['user_email']
+    title = request.json['title']
+    description = request.json['description']
+    date = request.json['date']
+    temp = date.split('T')
+    date = temp[0]
+    reminders = Reminder(user_email, title, description, date)
+
+    db.session.add(reminders)
+    db.session.commit()
+
+    all_reminders = Reminder.query.all()
+    return jsonify(reminders_schema.dump(all_reminders))
+
+@app.route('/alerts', methods=['GET'])
+def alerts():
+    START_DATE = datetime.datetime.now()
+    END_DATE = datetime.datetime.now() + datetime.timedelta(days=3)
+    print(request)
+    all_reminders = Reminder.query.filter(Reminder.date.between(START_DATE, END_DATE)).all()
+    return jsonify(reminders_schema.dump(all_reminders))
+
+
+############################ ADMIN PAGE ########################################
+
+@app.route('/admin/login', methods=['GET', 'POST'])
+def admin_authentication():
+    cc = "Admin Page"
+    cursor = mysql.connection.cursor()
+
+    if request.method == "POST":
+
+        email_input = request.form['email']
+        password_input = request.form['password']
+
+        try:
+            cursor.execute(f"SELECT user_email from user where user_email = '{email_input}' AND user_name like 'admin%'")
+            email = cursor.fetchall()
+
+            if (email_input == "" or password_input == ""):
+                error = "Enter email or password"
+                #return render_template('admin_login.html', **locals())
+
+            elif (len(email) == 0):
+                error = "Enter a valid email"
+                #return render_template('admin_login.html', **locals())
+
+            elif (email[0][0] == email_input):
+                cursor.execute(f"SELECT hashed_password from user where user_email = '{email_input}' AND user_name like 'admin%'")
+                password = cursor.fetchall()
+
+                if (bcrypt.check_password_hash(password[0][0], password_input)):
+                    #token = create_token(user.id)
+                    #return jsonify({'token': token})
+                    cursor.execute(f"SELECT * from user where user_email = '{email_input}' AND user_name like 'admin%'")
+                    id = cursor.fetchall()
+                    user = User.query.get(id[0][0])
+                    print(user)
+                    login_user(user)
+                    return redirect(url_for('admin.index')+"/user/")
+                    #return render_template('admin_login.html', **locals())
+                else:
+                    error = "Wrong password, please try again"
+                    #return render_template('admin_login.html', **locals())
+
+        except Exception as e:
+            print("Error: " + str(e))
+            cursor = mysql.connection.cursor()
+            error = e
+            return render_template('admin_login.html', **locals())
+        #mysql.connection.commit()
+
+        #cursor.close()
+
+    return render_template('admin_login.html', **locals())
+
+@app.route('/admin/logout', methods=['GET', 'POST'])
+def admin_authentication_logout():
+    logout_user()
+    return redirect(url_for('admin_authentication'))
