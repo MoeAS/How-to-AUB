@@ -14,7 +14,7 @@ function WelcomeScreen({props, navigation}) {
 
 
             <View style = {styles.buttoncontainer}>
-                 <AppButton title = "Get Started" color= "yellow" textcolor = "white" onPress={() => navigation.navigate("SignupLogin")}></AppButton>
+                 <AppButton title = "Get Started" color= "yellow" textcolor = "black" onPress={() => navigation.navigate("SignupLogin")}></AppButton>
             </View>
 
         </ImageBackground>

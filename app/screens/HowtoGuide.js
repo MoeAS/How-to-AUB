@@ -12,7 +12,7 @@ function HowtoGuide({navigation, props}) {
     const [loading, setLoading] = useState(true);
 
     const loadData = () => {
-      fetch("http://192.168.1.13:3000/getforum" ,{
+      fetch("http://192.158.1.13:3000/getforum" ,{
           method : "GET"
       })
       .then(resp => resp.json())
@@ -25,7 +25,7 @@ function HowtoGuide({navigation, props}) {
 
     useEffect(() => {
         loadData()
-    }, []
+    }, [forums]
 
     )
 
@@ -38,9 +38,9 @@ function HowtoGuide({navigation, props}) {
     const renderData = (item) => {
         return(
           <Card style = {styles.card}>
-            <Text style = {{fontSize: 20, marginBottom: 10, fontWeight: "bold"}} onPress = {() => clickedItem(item)}>{item.title}</Text>
-            <Text style = {{fontSize: 12}}>{item.date}</Text>
-            <Text style = {{left: Dimensions.get('window').width - 110, fontWeight: "bold"}}>Rating: {item.rating}</Text>
+            <Text style = {{fontSize: 20, marginBottom: 10, fontWeight: "bold", color: "black"}} onPress = {() => clickedItem(item)}>{item.title}</Text>
+            <Text style = {{fontSize: 12, color: "black"}}>{item.date}</Text>
+            <Text style = {{left: Dimensions.get('window').width - 110, fontWeight: "bold", color: "black"}}>Rating: {item.rating}</Text>
           </Card>
         )
     }
@@ -81,6 +81,10 @@ function HowtoGuide({navigation, props}) {
 
             />
 
+
+
+            </View>
+
             <FAB
               style = {styles.fab}
               small = {false}
@@ -88,8 +92,6 @@ function HowtoGuide({navigation, props}) {
               theme = {{colors:{accent: "yellow"}}}
               onPress = {() => navigation.navigate("CreateForum")}
             />
-
-            </View>
 
 
 </View>
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       margin:16,
       right: 0,
-      bottom: Dimensions.get('window').height - Dimensions.get('window').width - 270,
+      bottom: Dimensions.get('window').height - Dimensions.get('window').width - 600,
     },
 
     container: {
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
 
     },
     text:{
-        color: colors.white,
+        color: colors.black,
         fontSize : 15,
 
     },

@@ -34,6 +34,11 @@ import HowtoGuideDetailsEdit from './app/screens/HowtoGuideDetailsEdit';
 import HowtoGuide from './app/screens/HowtoGuide';
 import CreateForum from './app/screens/CreateForum';
 import CalendarScreen from './app/screens/CalendarScreen';
+import WelcomeHomeGuide from './app/screens/WelcomeHomeGuide';
+import ClubDetails from './app/screens/ClubDetails';
+import CreateReminder from './app/screens/CreateReminder';
+import AlertsScreen from './app/screens/AlertsScreen';
+import HomePage from './app/screens/HomePage';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -95,9 +100,14 @@ const CreateForumStack = createNativeStackNavigator();
 const HowtoGuideDetailsStack = createNativeStackNavigator();
 const HowtoGuideDetailsEditStack = createNativeStackNavigator();
 const CalendarScreenStack = createNativeStackNavigator();
+const WelcomeHomeGuideStack = createNativeStackNavigator();
+const ClubDetailsStack = createNativeStackNavigator();
+const CreateReminderStack = createNativeStackNavigator();
+const HomePageStack = createNativeStackNavigator();
+const AlertsScreenStack = createNativeStackNavigator();
 
-const WelcomeStackScreen = ({navigation}) => (
-  <WelcomeScreenStack.Navigator>
+    const WelcomeStackScreen = ({navigation}) => (
+    <WelcomeScreenStack.Navigator>
     <WelcomeScreenStack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{
     headerShown: true,
     headerTransparent: true,
@@ -107,12 +117,286 @@ const WelcomeStackScreen = ({navigation}) => (
     onPress={() => {navigation.openDrawer()}}></Icon>
     )
     }}/>
-  </WelcomeScreenStack.Navigator>
-  );
+    </WelcomeScreenStack.Navigator>
+    );
 
-  const SignupLoginStackScreen = ({navigation}) => (
+    const SignupLoginStackScreen = ({navigation}) => (
     <SignupLoginStack.Navigator>
-      <SignupLoginStack.Screen name="SignupLogin" component={SignupLogin} options={{
+    <SignupLoginStack.Screen name="SignupLogin" component={SignupLogin} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </SignupLoginStack.Navigator>
+    );
+
+    const LoginStackScreen = ({navigation}) => (
+    <LoginScreenStack.Navigator>
+    <LoginScreenStack.Screen name="LoginScreen" component={LoginScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </LoginScreenStack.Navigator>
+    );
+
+    const SignupStackScreen = ({navigation}) => (
+    <SignupScreenStack.Navigator>
+    <SignupScreenStack.Screen name="SignupScreen" component={SignupScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </SignupScreenStack.Navigator>
+    );
+
+    const LoginAfterStackScreen = ({navigation}) => (
+    <LoginAfterStack.Navigator>
+    <LoginAfterStack.Screen name="LoginAfter" component={LoginAfter} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </LoginAfterStack.Navigator>
+    );
+
+    const HomeGuideStackScreen = ({navigation}) => (
+    <HomeGuideStack.Navigator>
+    <HomeGuideStack.Screen name="HomeGuide" component={HomeGuide} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </HomeGuideStack.Navigator>
+    );
+
+    const AUBMAPSStackScreen = ({navigation}) => (
+    <AUBMAPSStack.Navigator>
+    <AUBMAPSStack.Screen name="AUBMAPS" component={AUBMAPS} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </AUBMAPSStack.Navigator>
+    );
+
+    const AUBSISStackScreen = ({navigation}) => (
+    <AUBSISStack.Navigator>
+    <AUBSISStack.Screen name="AUBSIS" component={AUBSIS} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </AUBSISStack.Navigator>
+    );
+
+    const AUBMOODLEStackScreen = ({navigation}) => (
+    <AUBMOODLEStack.Navigator>
+    <AUBMOODLEStack.Screen name="AUBMOODLE" component={AUBMOODLE} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </AUBMOODLEStack.Navigator>
+    );
+    const ClubsStackScreen = ({navigation}) => (
+    <ClubsScreenStack.Navigator>
+    <ClubsScreenStack.Screen name="Clubs" component={ClubsScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </ClubsScreenStack.Navigator>
+    );
+
+    const CoursesStackScreen = ({navigation}) => (
+    <CoursesScreenStack.Navigator>
+    <CoursesScreenStack.Screen name="CoursesScreen" component={CoursesScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CoursesScreenStack.Navigator>
+    );
+
+    const CourseStackDetails = ({navigation}) => (
+    <CourseDetailsStack.Navigator>
+    <CourseDetailsStack.Screen name="CourseDetails" component={CourseDetails} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CourseDetailsStack.Navigator>
+    );
+
+    const HowtoGuideStackScreen = ({navigation}) => (
+    <HowtoGuideStack.Navigator>
+    <HowtoGuideStack.Screen name="HowtoGuide" component={HowtoGuide} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </HowtoGuideStack.Navigator>
+    );
+
+    const CreateForumStackScreen = ({navigation}) => (
+    <CreateForumStack.Navigator>
+    <CreateForumStack.Screen name="CreateForum" component={CreateForum} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CreateForumStack.Navigator>
+    );
+    const HowtoGuideDetailsStackScreen = ({navigation}) => (
+    <HowtoGuideDetailsStack.Navigator>
+    <HowtoGuideDetailsStack.Screen name="HowtoGuideDetails" component={HowtoGuideDetails} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </HowtoGuideDetailsStack.Navigator>
+    );
+    const HowtoGuideDetailsEditStackScreen = ({navigation}) => (
+    <HowtoGuideDetailsEditStack.Navigator>
+    <HowtoGuideDetailsEditStack.Screen name="HowtoGuideDetailsEdit" component={HowtoGuideDetailsEdit} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </HowtoGuideDetailsEditStack.Navigator>
+    );
+    const CalendarStackScreen = ({navigation}) => (
+    <CalendarScreenStack.Navigator>
+    <CalendarScreenStack.Screen name="CalendarScreen" component={CalendarScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CalendarScreenStack.Navigator>
+    );
+    const WelcomeHomeGuideScreenStack = ({navigation}) => (
+    <WelcomeHomeGuideStack.Navigator>
+    <WelcomeHomeGuideStack.Screen name="WelcomeHomeGuide" component={WelcomeHomeGuide} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </WelcomeHomeGuideStack.Navigator>
+    );
+    const ClubStackDetails= ({navigation}) => (
+    <ClubDetailsStack.Navigator>
+    <ClubDetailsStack.Screen name="ClubDetails" component={ClubDetails} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </ClubDetailsStack.Navigator>
+    );
+
+    const CreateReminderStackScreen = ({navigation}) => (
+    <CreateReminderStack.Navigator>
+    <CreateReminderStack.Screen name="CreateReminder" component={CreateReminder} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CreateReminderStack.Navigator>
+    );
+
+    const HomePageStackScreen = ({navigation}) => (
+    <HomePageStack.Navigator>
+    <HomePageStack.Screen name="HomePage" component={HomePage} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </HomePageStack.Navigator>
+    );
+
+    const AlertsStackScreen = ({navigation}) => (
+    <AlertsScreenStack.Navigator>
+      <AlertsScreenStack.Screen name="Alerts" component={AlertsScreen} options={{
         headerShown: true,
         headerTransparent: true,
         title: '',
@@ -121,214 +405,8 @@ const WelcomeStackScreen = ({navigation}) => (
         onPress={() => {navigation.openDrawer()}}></Icon>
         )
       }}/>
-    </SignupLoginStack.Navigator>
+    </AlertsScreenStack.Navigator>
     );
-
-    const LoginStackScreen = ({navigation}) => (
-      <LoginScreenStack.Navigator>
-        <LoginScreenStack.Screen name="LoginScreen" component={LoginScreen} options={{
-          headerShown: true,
-          headerTransparent: true,
-          title: '',
-          headerLeft: () => (
-          <Icon name='ios-menu' size = {25}
-          onPress={() => {navigation.openDrawer()}}></Icon>
-          )
-        }}/>
-      </LoginScreenStack.Navigator>
-      );
-
-      const SignupStackScreen = ({navigation}) => (
-        <SignupScreenStack.Navigator>
-          <SignupScreenStack.Screen name="SignupScreen" component={SignupScreen} options={{
-            headerShown: true,
-            headerTransparent: true,
-            title: '',
-            headerLeft: () => (
-            <Icon name='ios-menu' size = {25}
-            onPress={() => {navigation.openDrawer()}}></Icon>
-            )
-          }}/>
-        </SignupScreenStack.Navigator>
-        );
-
-        const LoginAfterStackScreen = ({navigation}) => (
-          <LoginAfterStack.Navigator>
-            <LoginAfterStack.Screen name="LoginAfter" component={LoginAfter} options={{
-              headerShown: true,
-              headerTransparent: true,
-              title: '',
-              headerLeft: () => (
-              <Icon name='ios-menu' size = {25}
-              onPress={() => {navigation.openDrawer()}}></Icon>
-              )
-            }}/>
-          </LoginAfterStack.Navigator>
-          );
-
-          const HomeGuideStackScreen = ({navigation}) => (
-            <HomeGuideStack.Navigator>
-              <HomeGuideStack.Screen name="HomeGuide" component={HomeGuide} options={{
-                headerShown: true,
-                headerTransparent: true,
-                title: '',
-                headerLeft: () => (
-                <Icon name='ios-menu' size = {25}
-                onPress={() => {navigation.openDrawer()}}></Icon>
-                )
-              }}/>
-            </HomeGuideStack.Navigator>
-            );
-
-            const AUBMAPSStackScreen = ({navigation}) => (
-              <AUBMAPSStack.Navigator>
-                <AUBMAPSStack.Screen name="AUBMAPS" component={AUBMAPS} options={{
-                  headerShown: true,
-                  headerTransparent: true,
-                  title: '',
-                  headerLeft: () => (
-                  <Icon name='ios-menu' size = {25}
-                  onPress={() => {navigation.openDrawer()}}></Icon>
-                  )
-                }}/>
-              </AUBMAPSStack.Navigator>
-              );
-
-              const AUBSISStackScreen = ({navigation}) => (
-                <AUBSISStack.Navigator>
-                  <AUBSISStack.Screen name="AUBSIS" component={AUBSIS} options={{
-                    headerShown: true,
-                    headerTransparent: true,
-                    title: '',
-                    headerLeft: () => (
-                    <Icon name='ios-menu' size = {25}
-                    onPress={() => {navigation.openDrawer()}}></Icon>
-                    )
-                  }}/>
-                </AUBSISStack.Navigator>
-                );
-
-                const AUBMOODLEStackScreen = ({navigation}) => (
-                  <AUBMOODLEStack.Navigator>
-                    <AUBMOODLEStack.Screen name="AUBMOODLE" component={AUBMOODLE} options={{
-                      headerShown: true,
-                      headerTransparent: true,
-                      title: '',
-                      headerLeft: () => (
-                      <Icon name='ios-menu' size = {25}
-                      onPress={() => {navigation.openDrawer()}}></Icon>
-                      )
-                    }}/>
-                  </AUBMOODLEStack.Navigator>
-                  );
-                  const ClubsStackScreen = ({navigation}) => (
-                    <ClubsScreenStack.Navigator>
-                      <ClubsScreenStack.Screen name="Clubs" component={ClubsScreen} options={{
-                        headerShown: true,
-                        headerTransparent: true,
-                        title: '',
-                        headerLeft: () => (
-                        <Icon name='ios-menu' size = {25}
-                        onPress={() => {navigation.openDrawer()}}></Icon>
-                        )
-                      }}/>
-                    </ClubsScreenStack.Navigator>
-                    );
-
-                    const CoursesStackScreen = ({navigation}) => (
-                      <CoursesScreenStack.Navigator>
-                        <CoursesScreenStack.Screen name="CoursesScreen" component={CoursesScreen} options={{
-                          headerShown: true,
-                          headerTransparent: true,
-                          title: '',
-                          headerLeft: () => (
-                          <Icon name='ios-menu' size = {25}
-                          onPress={() => {navigation.openDrawer()}}></Icon>
-                          )
-                        }}/>
-                      </CoursesScreenStack.Navigator>
-                      );
-
-                      const CourseStackDetails = ({navigation}) => (
-                        <CourseDetailsStack.Navigator>
-                          <CourseDetailsStack.Screen name="CourseDetails" component={CourseDetails} options={{
-                            headerShown: true,
-                            headerTransparent: true,
-                            title: '',
-                            headerLeft: () => (
-                            <Icon name='ios-menu' size = {25}
-                            onPress={() => {navigation.openDrawer()}}></Icon>
-                            )
-                          }}/>
-                        </CourseDetailsStack.Navigator>
-                        );
-
-                        const HowtoGuideStackScreen = ({navigation}) => (
-                          <HowtoGuideStack.Navigator>
-                            <HowtoGuideStack.Screen name="HowtoGuide" component={HowtoGuide} options={{
-                              headerShown: true,
-                              headerTransparent: true,
-                              title: '',
-                              headerLeft: () => (
-                              <Icon name='ios-menu' size = {25}
-                              onPress={() => {navigation.openDrawer()}}></Icon>
-                              )
-                            }}/>
-                          </HowtoGuideStack.Navigator>
-                          );
-
-                          const CreateForumStackScreen = ({navigation}) => (
-                            <CreateForumStack.Navigator>
-                              <CreateForumStack.Screen name="CreateForum" component={CreateForum} options={{
-                                headerShown: true,
-                                headerTransparent: true,
-                                title: '',
-                                headerLeft: () => (
-                                <Icon name='ios-menu' size = {25}
-                                onPress={() => {navigation.openDrawer()}}></Icon>
-                                )
-                              }}/>
-                            </CreateForumStack.Navigator>
-                            );
-                            const HowtoGuideDetailsStackScreen = ({navigation}) => (
-                              <HowtoGuideDetailsStack.Navigator>
-                                <HowtoGuideDetailsStack.Screen name="HowtoGuideDetails" component={HowtoGuideDetails} options={{
-                                  headerShown: true,
-                                  headerTransparent: true,
-                                  title: '',
-                                  headerLeft: () => (
-                                  <Icon name='ios-menu' size = {25}
-                                  onPress={() => {navigation.openDrawer()}}></Icon>
-                                  )
-                                }}/>
-                              </HowtoGuideDetailsStack.Navigator>
-                              );
-                              const HowtoGuideDetailsEditStackScreen = ({navigation}) => (
-                                <HowtoGuideDetailsEditStack.Navigator>
-                                  <HowtoGuideDetailsEditStack.Screen name="HowtoGuideDetailsEdit" component={HowtoGuideDetailsEdit} options={{
-                                    headerShown: true,
-                                    headerTransparent: true,
-                                    title: '',
-                                    headerLeft: () => (
-                                    <Icon name='ios-menu' size = {25}
-                                    onPress={() => {navigation.openDrawer()}}></Icon>
-                                    )
-                                  }}/>
-                                </HowtoGuideDetailsEditStack.Navigator>
-                                );
-                                const CalendarStackScreen = ({navigation}) => (
-                          <CalendarScreenStack.Navigator>
-                            <CalendarScreenStack.Screen name="CalendarScreen" component={CalendarScreen} options={{
-                              headerShown: true,
-                              headerTransparent: true,
-                              title: '',
-                              headerLeft: () => (
-                              <Icon name='ios-menu' size = {25}
-                              onPress={() => {navigation.openDrawer()}}></Icon>
-                              )
-                            }}/>
-                          </CalendarScreenStack.Navigator>
-                          );
 
 const App = () => {
 
@@ -357,7 +435,11 @@ const App = () => {
         <Drawer.Screen name="HowtoGuideDetails" component={HowtoGuideDetailsStackScreen} />
         <Drawer.Screen name="HowtoGuideDetailsEdit" component={HowtoGuideDetailsEditStackScreen} />
         <Drawer.Screen name="CalendarScreen" component={CalendarStackScreen} />
-
+        <Drawer.Screen name="WelcomeHomeGuide" component={WelcomeHomeGuideScreenStack} />
+        <Drawer.Screen name="ClubDetails" component={ClubStackDetails} />
+        <Drawer.Screen name="CreateReminder" component={CreateReminderStackScreen} />
+        <Drawer.Screen name="HomePage" component={HomePageStackScreen} />
+        <Drawer.Screen name="AlertsScreen" component={AlertsStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
 

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import { ImageBackground, StyleSheet, View, Image, Text, Keyboard,  TouchableWithoutFeedback, Alert} from 'react-native';
+import { ImageBackground, StyleSheet, View, Image, Text, Keyboard,  TouchableWithoutFeedback, Alert, Dimensions} from 'react-native';
 
 import AppFormField from '../components/AppFormField';
 import AppForm from '../components/AppForm';
@@ -31,8 +31,8 @@ const validationSchema = Yup.object().shape({
 });
 
 function SignupScreen({props, navigation}) {
-   
-    [email, setEmail] = useState("");  
+
+    [email, setEmail] = useState("");
     [username, setUsername] = useState("");
     [password, setPassword] = useState("");
     [confirmpass, setConfirmPassword] = useState("");
@@ -41,7 +41,7 @@ function SignupScreen({props, navigation}) {
 
     const signUp = () => {
         if(confirmpass == password){
-          fetch('http://10.169.11.184:3000/signup', {
+          fetch('http://192.168.1.14:3000/signup', {
               method: 'POST',
               headers: {
                 "Content-type" : "application/json"
@@ -65,7 +65,7 @@ function SignupScreen({props, navigation}) {
             ]
           );
 
-          navigation.navigate("LoginAfter")
+          navigation.navigate("LoginScreen")
           }
 
           else {
@@ -94,8 +94,8 @@ function SignupScreen({props, navigation}) {
     }
 
   };
-            
-    
+
+
     return (
       <DismissKeyboard>
         <ImageBackground

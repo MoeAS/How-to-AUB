@@ -21,23 +21,30 @@ function HowtoGuideDetailsEdit({props, route, navigation}) {
 
     const [title, setTitle] = useState(forums.title);
     const [description, setDescription] = useState(forums.description);
-    const [rating, setRating] = useState(forums.rating);
+    //const [rating, setRating] = useState(forums.rating);
 
-    const ratingChanged = (newRating) => {
-      console.log(newRating)
-      setRating(newRating)
-    }
+    console.log(title)
+    console.log(forums.title)
+
+    useEffect(() => {
+        setTitle(forums.title)
+        setDescription(forums.description)
+        //setRating(forums.rating)
+
+    }, [route]
+
+    )
+
 
     const updateData = () => {
-      fetch(`http://192.168.1.13:3000/updateforum/${forums.id}/` ,{
+      fetch(`http://192.158.1.14:3000/updateforum/${forums.id}/` ,{
           method : "PUT",
           headers: {
               "Content-Type": "application/json"
           },
           body: JSON.stringify({
               "title": title,
-              "description": description,
-              "rating": rating
+              "description": description
       })
     })
       .then((response) => {
@@ -69,6 +76,8 @@ function HowtoGuideDetailsEdit({props, route, navigation}) {
       .catch(error => console.log(error))
 
     }
+
+  console.log(title)
 
     return (
 
@@ -113,15 +122,6 @@ function HowtoGuideDetailsEdit({props, route, navigation}) {
               selectionColor = "blue"
             />
 
-            <StarRating
-            disabled={false}
-            fullStarColor = {'yellow'}
-            maxStars={5}
-            rating={rating}
-            selectedStar={(rating) => setRating(rating)}
-            starSize = {40}
-            />
-
             <Button
             style = {{margin: 10, borderRadius: 15,}}
             icon = "update"
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
       position: 'absolute',
       margin:16,
       right: 0,
-      bottom: Dimensions.get('window').height - Dimensions.get('window').width - 270,
+      bottom: Dimensions.get('window').height - Dimensions.get('window').width - 280,
     },
 
     container: {

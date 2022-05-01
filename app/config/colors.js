@@ -12,4 +12,5 @@ export default {
     lightsteelblue: '#b0c4de',
     lightslategrey: '#778899',
     darkgray: '#23313E',
+	mans: '#23313E',
 }

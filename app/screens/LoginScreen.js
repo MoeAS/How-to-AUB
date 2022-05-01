@@ -29,14 +29,14 @@ const validationSchema = Yup.object().shape({
 });
 
 function LoginScreen({props, navigation}) {
-   
+
     [email, setEmail] = useState("");
     [password, setPassword] = useState("");
-    
+
     const headers = {"Content-type" : "application/json"};
 
     const signin = () => {
-        fetch('http://10.169.11.184:3000/signin', {
+        fetch('http://192.168.1.14:3000/signin', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
@@ -46,8 +46,8 @@ function LoginScreen({props, navigation}) {
                 "password": password
 
         }) // body data type must match "Content-Type" header
-        
-        
+
+
         })
         .then((response) => {
             console.log(response.status)
@@ -59,10 +59,10 @@ function LoginScreen({props, navigation}) {
               { text: "OK", onPress: () => console.log("OK Pressed") }
             ]
           );
-  
+
           navigation.navigate("How to Guide")
           }
-  
+
           else if (response.status == 401) {
             Alert.alert(
             "Error",
@@ -72,7 +72,7 @@ function LoginScreen({props, navigation}) {
             ]
           );
           }
-  
+
           else if (response.status == 402) {
             Alert.alert(
             "Error",
@@ -82,7 +82,7 @@ function LoginScreen({props, navigation}) {
             ]
           );
           }
-  
+
           else if (response.status == 403) {
             Alert.alert(
             "Error",
@@ -92,7 +92,7 @@ function LoginScreen({props, navigation}) {
             ]
           );
           }
-  
+
           else {
             Alert.alert(
             "Error",
@@ -102,14 +102,14 @@ function LoginScreen({props, navigation}) {
             ]
           );
           }
-  
+
           })
           .catch(error => console.log(error))
-  
-  
-  
+
+
+
   };
-    
+
 
     return (
         <DismissKeyboard>

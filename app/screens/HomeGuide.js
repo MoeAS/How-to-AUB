@@ -8,6 +8,18 @@ import colors from '../config/colors';
 
 function HomeGuide({props, navigation}) {
 
+  const [reminders, setReminders] = useState();
+
+  useEffect(() => {
+      fetch("http://192.168.1.13:3000/reminders" ,{
+          method : "GET"
+      })
+      .then(resp => resp.json())
+      .then(reminders => {setReminders(reminders)})
+  }, []
+
+  );
+
     return (
         <ImageBackground
         //blurRadius={5}
@@ -30,7 +42,7 @@ function HomeGuide({props, navigation}) {
                     onPress={() => navigation.navigate("Clubs")}
                     ></AppButton>
                     <AppButton title = "Volunteering" color = "darkgray" textcolor = "white"
-                    onPress={() => navigation.navigate("CalendarScreen")}
+                    onPress={() => navigation.navigate("CalendarScreen",{screen: 'CalendarScreen', params: {reminders: reminders}})}
                     ></AppButton>
                     <AppButton title = "Workshops" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("Courses")}

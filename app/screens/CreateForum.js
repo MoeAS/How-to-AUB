@@ -48,7 +48,9 @@ function CreateForum({props, navigation}) {
             { text: "OK", onPress: () => console.log("OK Pressed") }
           ]
         );
-
+        setTitle("")
+        setDescription("")
+        setRating(0)
         navigation.navigate("HowtoGuide")
         }
 

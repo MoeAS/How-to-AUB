@@ -12,7 +12,7 @@ import HowtoGuide from './HowtoGuide'
 
 function HowtoGuideDetails({props, route, navigation}) {
   const forums = route.params.forums
-  console.log(forums)
+  console.log(route.params.forums)
 
 
   const DismissKeyboard = ({ children }) => (
@@ -24,6 +24,7 @@ function HowtoGuideDetails({props, route, navigation}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [rating, setRating] = useState(0);
+    const [newforums, setNewForums] = useState(forums)
 
     const ratingChanged = (newRating) => {
       console.log(newRating)
@@ -31,7 +32,7 @@ function HowtoGuideDetails({props, route, navigation}) {
     }
 
     const deleteData = () => {
-      fetch(`http://192.168.1.13:3000/deleteforum/${forums.id}/` ,{
+      fetch(`http://192.158.1.13:3000/deleteforum/${forums.id}/` ,{
           method : "DELETE",
           headers: {
               "Content-Type": "application/json"
@@ -66,6 +67,46 @@ function HowtoGuideDetails({props, route, navigation}) {
 
     }
 
+    const loadData = () => {
+      fetch(`http://192.158.1.13:3000/getforum/${forums.id}/` ,{
+          method : "GET"
+      })
+      .then(resp => resp.json())
+      .then(newforums => {
+        setNewForums(newforums)
+      })
+      .catch(error => console.log(error))
+    }
+
+
+    useEffect(() => {
+        loadData()
+    }, [route]
+
+    )
+
+
+    const rateData = (rating) => {
+      console.log(rating)
+      fetch(`http://192.158.1.13:3000/rateforum/${forums.id}/` ,{
+          method : "PUT",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+              "rating": rating,
+      })
+    })
+      .then((response) => {
+          console.log(response.status)
+          response.json()
+          loadData()}
+        )
+
+      .catch(error => console.log(error))
+
+    }
+
     return (
 
         <Screen>
@@ -88,24 +129,24 @@ function HowtoGuideDetails({props, route, navigation}) {
 
             <View style = {styles.container}>
 
-            <Text style = {{fontSize: 30, top:Dimensions.get('window').height - 740, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 30, top:Dimensions.get('window').height - 880, color:"#FFFFFF"}}>
               {forums.title}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 720, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 830, color:"#FFFFFF"}}>
               {forums.date}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 700, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 900, color:"#FFFFFF"}}>
               {forums.user_email}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 670, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 800, color:"#FFFFFF"}}>
               {forums.description}
             </Text>
 
             <Text style = {{fontSize: 15, marginTop: 10, top:Dimensions.get('window').height - 580, right:Dimensions.get('window').width-700, color:"#FFFFFF"}}>
-              Rating: {forums.rating}
+              Rating: {newforums.rating}
             </Text>
 
             <View style = {styles.buttons}>
@@ -117,7 +158,10 @@ function HowtoGuideDetails({props, route, navigation}) {
             fullStarColor = {'yellow'}
             maxStars={5}
             rating={rating}
-            selectedStar={(rating) => setRating(rating)}
+            selectedStar={(rating) => {
+            setRating(rating);
+            rateData(rating);
+          }}
             starSize = {40}
             />
 
@@ -189,7 +233,7 @@ const styles = StyleSheet.create({
         padding: 20,
         flex: 1,
         margin: 50,
-        height: Dimensions.get('window').height - 290,
+        height: Dimensions.get('window').height - 310,
         width: Dimensions.get('window').width - 20,
 
 

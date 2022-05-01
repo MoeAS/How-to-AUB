@@ -43,7 +43,7 @@ export function DrawerContent(props){
                   />
                 )}
                 label = "Home"
-                onPress={() => {props.navigation.navigate('Home')}}
+                onPress={() => {props.navigation.navigate('HomePage')}}
                 />
 
                 <DrawerItem
@@ -61,13 +61,25 @@ export function DrawerContent(props){
                 <DrawerItem
                 icon = {({color, size}) => (
                   <Icon
+                  name = "map"
+                  color = {color}
+                  size = {size}
+                  />
+                )}
+                label = "Notifications"
+                onPress={() => {props.navigation.navigate('AlertsScreen')}}
+                />
+
+                <DrawerItem
+                icon = {({color, size}) => (
+                  <Icon
                   name = "book-account-outline"
                   color = {color}
                   size = {size}
                   />
                 )}
                 label = "How to Guide"
-                onPress={() => {props.navigation.navigate('How to Guide')}}
+                onPress={() => {props.navigation.navigate('WelcomeHomeGuide')}}
                 />
 
                 <DrawerItem

@@ -8,49 +8,17 @@ import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from
 
 
 function CourseDetails({route, navigation}) {
-    const courses = route.params.courses
-    console.log(courses.item)
-    console.log("hello")
+    const data = route.params.courses
+    const prerequisite = route.params.prerequisite
 
-    const [details, setDetails] = useState([]);
-    const [prerequisite, setPrerequisite] = useState([]);
+    console.log(data)
 
-    setDetails(courses);
 
-    useEffect(() => {
-        fetch("http://192.168.1.13:3000/details" ,{
-            method : ("POST", "GET"),
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "course_crn": course_crn
 
-        })
-        })
-        .then(resp => resp.json())
-        .then(details => {setDetails(details)})
-    }, []
+    //setDetails(courses);
 
-    );
-    console.log(details);
-
-    useEffect(() => {
-        fetch("http://192.168.1.13:3000/prerequisite" ,{
-            method : ("POST", "GET"),
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "course_crn": course_crn
-
-        })
-        })
-        .then(resp => resp.json())
-        .then(prerequisite => {setPrerequisite(prerequisite)})
-    }, []
-
-    );
+    var crn = data.item.course_crn
+    console.log(prerequisite)
 
 
 
@@ -59,29 +27,36 @@ function CourseDetails({route, navigation}) {
         <Screen>
         <ImageBackground
         style = {styles.background}
+        source = {require("../assets/bg2.jpg") }
 
         >
+            <View style = {styles.logocontent}>
+            <Image source = {require("../assets/HowToCourse.png")}
+            //style = {styles.logo}
+            >
+            </Image>
 
+            </View>
 
             <ScrollView style = {styles.scrollView}>
+            <View style = {styles.container}>
+                <View style = {styles.title}>
 
-            <View style = {styles.title}>
+                    <Text style = {styles.text_title}>Course Title: {data.item.course_id}</Text>
+                </View>
 
-                <Text>Course Title: {details.course_crn}</Text>
+                <View style = {styles.name}>
+                    <Text style = {styles.text}>Course Name: {data.item.course_name}</Text>
+                </View>
+
+                <View style = {styles.desc}>
+                    <Text style = {styles.text}>Course Description: {data.item.course_description}</Text>
+                </View>
+
+                <View style = {styles.pre}>
+                    <Text style = {styles.text} >Course Prerequisites: {prerequisite.prerequisite}</Text>
+                </View>
             </View>
-
-            <View style = {styles.name}>
-                <Text>Course Name: {details.course_name}</Text>
-            </View>
-
-            <View style = {styles.desc}>
-                <Text>Course Description: {details.course_description}</Text>
-            </View>
-
-            <View style = {styles.pre}>
-                <Text>Course Prerequisites: {prerequisite.item.course_prerequisite}</Text>
-            </View>
-
             </ScrollView>
 
         </ImageBackground>
@@ -97,13 +72,60 @@ const styles = StyleSheet.create({
         alignItems: "center",
         color: colors.darkgray,
     },
+    scrollView: {
 
+
+        top: 40,
+        padding: 5,
+    },
+    container: {
+        borderRadius: 20,
+        backgroundColor: colors.mans,
+        padding: 5,
+        paddingVertical: 40,
+    },
     text:{
         color: colors.white,
-        fontSize : 15,
+        fontSize : 18,
 
     },
-
+    text_title:{
+        color: colors.white,
+        fontSize : 25,
+        fontWeight: 'bold',
+    },
+    title: {
+        flex: 1,
+        fontSize : 20,
+        color: colors.white,
+        padding: 5,
+    },
+    name: {
+        flex: 1,
+        fontSize : 20,
+        color: colors.white,
+        padding: 5,
+    },
+    desc: {
+        flex: 1,
+        fontSize : 15,
+        color: colors.white,
+        padding: 5,
+    },
+    pre: {
+        flex: 1,
+        fontSize : 15,
+        color: colors.white,
+        padding: 5,
+    },
+    logocontent: {
+        //position: "absolute",
+        top: 70,
+        alignItems: "center",
+        width: 300,
+        height: 200,
+        left: 20,
+    },
 
 
 
