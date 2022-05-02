@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ImageBackground, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 
 import AppButton from '../components/AppButton';
-import LoginAfter from './LoginAfter';
 
 import colors from '../config/colors';
 
@@ -48,6 +47,9 @@ function HomeGuide({props, navigation}) {
                     ></AppButton>
                     <AppButton title = "Workshops" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("Courses")}
+                    ></AppButton>
+                    <AppButton title = "Study Areas" color = "darkgray" textcolor = "white"
+                    onPress={() => navigation.navigate("StudyAreaScreen")}
                     ></AppButton>
                 </View>
 

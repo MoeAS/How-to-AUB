@@ -30,7 +30,7 @@ function CreateForum({route, navigation}) {
 
 
     const insertData = () => {
-
+      
       const reminder = {"title": title,
       "description": description,
       "date": date,

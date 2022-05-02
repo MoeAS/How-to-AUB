@@ -4,18 +4,17 @@ import {ImageBackground, FlatList, ScrollView, StyleSheet, View, Image, Button, 
 import {Avatar, Title, Caption, Paragraph, Drawer, TouchableRipple, Switch} from 'react-native-paper';
 
 
-function ClubField({club_name, club_description, CRN}) {
+function ClubField({club_name, club_description,image, CRN}) {
+    console.log(image);
     return (
         <View style = {styles.clubs}> 
                     <View style={styles.clubcontent}>
 
                         <View style = {styles.imgtitle}>
                             <View style = {styles.img}>
-                                <Avatar.Image
-                                    source = {{
-                                    uri: 'https://www.kindpng.com/picc/m/24-248253_user-profile-default-image-png-clipart-png-download.png'
-                                    }}
-                                    size = {50}
+                                <Image
+                                    source ={image}
+                                    style = {styles.img}
                                 />
                             </View>
                             <View style = {styles.title}>
@@ -61,13 +60,22 @@ const styles = StyleSheet.create({
     },
     title: {
         padding: 10,
+        marginTop: 10,
     },
     description: {
         color: colors.white,
+        marginTop: 10,
     },
     clubs: {
         marginVertical: 5,
+        borderRadius: 20,
+        width: 380,
+        height: 200,
     },
+    img :{
+        width: 100,
+        height: 80.
+    }
 
 })
 

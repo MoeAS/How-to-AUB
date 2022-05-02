@@ -1,21 +1,20 @@
 import React, {useState} from 'react';
 
-import { ImageBackground, StyleSheet, View, Image, Text, Keyboard,  TouchableWithoutFeedback, Alert, Dimensions} from 'react-native';
+import { ImageBackground, StyleSheet, View, ScrollView, Image, Text, Keyboard,  TouchableWithoutFeedback, Alert, Dimensions} from 'react-native';
 
 import AppFormField from '../components/AppFormField';
 import AppForm from '../components/AppForm';
 import SubmitButton from '../components/SubmitButton';
 
-import {Formik} from 'formik';
+
 import * as Yup from 'yup';
 
 import colors from '../config/colors';
 
-import { signUp } from '../../actions/authentication';
-import {useDispatch} from "react-redux";
-import { useEffect } from 'react';
+
 
 import config from "../config/config.json"
+
 
 
 
@@ -26,7 +25,7 @@ const DismissKeyboard = ({ children }) => (
 );
 
 const validationSchema = Yup.object().shape({
-    email: Yup.string().required().email().label("email").matches("@mail.aub.edu"),
+    email: Yup.string().required().email().label("email"),
     password: Yup.string().required().min(6).label("password"),
     username: Yup.string().required().label("username"),
     confirmpass: Yup.string().required().label("confirmpass"),
@@ -129,6 +128,7 @@ function SignupScreen({props, navigation}) {
 
 
     return (
+      
       <DismissKeyboard>
         <ImageBackground
         //blurRadius={5}
@@ -150,6 +150,8 @@ function SignupScreen({props, navigation}) {
                 onSubmit= {values => console.log(values)}
                 validationSchema = {validationSchema}
             >
+
+
             <DismissKeyboard>
                 <View style = {styles.container}>
                 <AppFormField
@@ -213,6 +215,7 @@ function SignupScreen({props, navigation}) {
 
         </ImageBackground>
         </DismissKeyboard>
+        
     );
 }
 

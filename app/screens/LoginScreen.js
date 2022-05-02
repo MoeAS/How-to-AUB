@@ -4,7 +4,6 @@ import { ImageBackground, StyleSheet, View, Image, Text, Platform, Keyboard,  To
 import AppFormField from '../components/AppFormField';
 import AppForm from '../components/AppForm';
 import SubmitButton from '../components/SubmitButton';
-import LoginAfter from './LoginAfter';
 
 import {Formik} from 'formik';
 import * as Yup from 'yup';

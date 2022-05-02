@@ -24,7 +24,7 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import SignupLogin from './app/screens/SignupLogin';
 import SignupScreen from './app/screens/SignupScreen';
 import LoginScreen from './app/screens/LoginScreen';
-import LoginAfter from './app/screens/LoginAfter';
+
 import HomeGuide from './app/screens/HomeGuide';
 import ClubsScreen from './app/screens/ClubsScreen';
 import CoursesScreen from './app/screens/CoursesScreen';
@@ -39,6 +39,7 @@ import ClubDetails from './app/screens/ClubDetails';
 import CreateReminder from './app/screens/CreateReminder';
 import AlertsScreen from './app/screens/AlertsScreen';
 import HomePage from './app/screens/HomePage';
+import StudyAreaScreen from './app/screens/StudyAreaScreen';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -87,7 +88,7 @@ const WelcomeScreenStack = createNativeStackNavigator();
 const SignupLoginStack = createNativeStackNavigator();
 const LoginScreenStack = createNativeStackNavigator();
 const SignupScreenStack = createNativeStackNavigator();
-const LoginAfterStack = createNativeStackNavigator();
+
 const HomeGuideStack = createNativeStackNavigator();
 const AUBMAPSStack = createNativeStackNavigator();
 const AUBSISStack = createNativeStackNavigator();
@@ -105,6 +106,7 @@ const ClubDetailsStack = createNativeStackNavigator();
 const CreateReminderStack = createNativeStackNavigator();
 const HomePageStack = createNativeStackNavigator();
 const AlertsScreenStack = createNativeStackNavigator();
+const StudyAreaScreenStack = createNativeStackNavigator();
 
     const WelcomeStackScreen = ({navigation}) => (
     <WelcomeScreenStack.Navigator>
@@ -162,19 +164,7 @@ const AlertsScreenStack = createNativeStackNavigator();
     </SignupScreenStack.Navigator>
     );
 
-    const LoginAfterStackScreen = ({navigation}) => (
-    <LoginAfterStack.Navigator>
-    <LoginAfterStack.Screen name="LoginAfter" component={LoginAfter} options={{
-    headerShown: true,
-    headerTransparent: true,
-    title: '',
-    headerLeft: () => (
-    <Icon name='ios-menu' size = {25}
-    onPress={() => {navigation.openDrawer()}}></Icon>
-    )
-    }}/>
-    </LoginAfterStack.Navigator>
-    );
+    
 
     const HomeGuideStackScreen = ({navigation}) => (
     <HomeGuideStack.Navigator>
@@ -408,6 +398,23 @@ const AlertsScreenStack = createNativeStackNavigator();
     </AlertsScreenStack.Navigator>
     );
 
+    StudyAreaScreenStack
+
+    const StudyAreaStackScreen = ({navigation}) => (
+      <StudyAreaScreenStack.Navigator>
+        <StudyAreaScreenStack.Screen name="StudyArea" component={StudyAreaScreen} options={{
+          headerShown: true,
+          headerTransparent: true,
+          title: '',
+          headerLeft: () => (
+          <Icon name='ios-menu' size = {25}
+          onPress={() => {navigation.openDrawer()}}></Icon>
+          )
+        }}/>
+      </StudyAreaScreenStack.Navigator>
+      );
+
+
 const App = () => {
 
   return (
@@ -423,7 +430,7 @@ const App = () => {
         <Drawer.Screen name="AUB 3D Map" component={AUBMAPSStackScreen} />
         <Drawer.Screen name="SignupLogin" component={SignupLoginStackScreen} />
         <Drawer.Screen name="LoginScreen" component={LoginStackScreen} />
-        <Drawer.Screen name="LoginAfter" component={LoginAfterStackScreen} />
+       
         <Drawer.Screen name="SignupScreen" component={SignupStackScreen} />
         <Drawer.Screen name="AUBSIS" component={AUBSISStackScreen} />
         <Drawer.Screen name="AUBMOODLE" component={AUBMOODLEStackScreen} />
@@ -440,6 +447,7 @@ const App = () => {
         <Drawer.Screen name="CreateReminder" component={CreateReminderStackScreen} />
         <Drawer.Screen name="HomePage" component={HomePageStackScreen} />
         <Drawer.Screen name="AlertsScreen" component={AlertsStackScreen} />
+        <Drawer.Screen name="StudyAreaScreen" component={StudyAreaStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
 
