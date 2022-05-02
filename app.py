@@ -25,10 +25,10 @@ app = Flask(__name__)
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = '7aMoudi72571'
+app.config['MYSQL_PASSWORD'] = 'Wearecool12345'
 app.config['MYSQL_DB'] = 'howtoaub'
 mysql = MySQL(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:7aMoudi72571@127.0.0.1:3306/howtoaub'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:Wearecool12345@127.0.0.1:3306/howtoaub'
 app.config['SECRET_KEY'] = 'mysecret'
 db = SQLAlchemy(app)
 
@@ -131,7 +131,7 @@ class Course(db.Model):
     course_description = db.Column(db.Text())
     course_dept = db.Column(db.String(70))
 
-    def __init__(self, course_crn, course_name, course_description):
+    def __init__(self, course_id, course_crn, course_name, course_description, course_dept):
         super(Course, self).__init__(course_id=course_id)
         super(Course, self).__init__(course_crn=course_crn)
         super(Course, self).__init__(course_name=course_name)
@@ -147,6 +147,30 @@ class CourseSchema(ma.Schema):
 course_schema = CourseSchema()
 courses_schema = CourseSchema(many=True)
 admin.add_view(MyModelView(Course, db.session))
+
+class Study(db.Model):
+    place_id = db.Column(db.Integer, primary_key=True, autoincrement= True)
+    place_name = db.Column(db.String(30))
+    place_description = db.Column(db.Text())
+    place_image = db.Column(db.String(70))
+
+    def __init__(self, place_id, place_name, place_description, place_image):
+        super(Study, self).__init__(place_id = place_id)
+        super(Study, self).__init__(place_name=place_name)
+        super(Study, self).__init__(place_description=place_description)
+        super(Study, self).__init__(place_image=place_image)
+
+class StudySchema(ma.Schema):
+    class Meta:
+        fields = ("place_id",  "place_name", "place_description", "place_image")
+        model = Study
+
+
+
+
+study_schema = StudySchema()
+studys_schema = StudySchema(many=True)
+admin.add_view(MyModelView(Study, db.session))
 
 class Prerequisite(db.Model):
 
@@ -360,6 +384,12 @@ def interest():
     return jsonify(clubs_schema.dump(all_interests))
 
 ################################## COURSES PAGE ################################
+
+@app.route('/study', methods=['GET'])
+def study():
+    print(request)
+    all_areas = Study.query.all()
+    return jsonify(studys_schema.dump(all_areas))
 
 @app.route('/courses', methods=['GET'])
 def courses():
