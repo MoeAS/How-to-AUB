@@ -54,7 +54,7 @@ function CourseDetails({route, navigation}) {
                 </View>
 
                 <View style = {styles.pre}>
-                    <Text style = {styles.text} >Course Prerequisites: {prerequisite.prerequisite}</Text>
+                    <Text style = {styles.text} >Course Prerequisites: {prerequisite[0].course_pre_name}, CRN: {prerequisite[0].course_prereq}</Text>
                 </View>
             </View>
             </ScrollView>

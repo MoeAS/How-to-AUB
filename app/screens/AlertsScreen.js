@@ -11,12 +11,24 @@ function AlertsScreen(props) {
     const [reminders, setReminders] = useState([{"date": "", "description": "", "id": 8, "title": "", "user_email": ""}]);
     const [loading, setLoading] = useState(false);
 
+
+    const loadData = () => {
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/alerts` ,{
+          method : "GET"
+      })
+      .then(resp => resp.json())
+      .then(reminders => {setReminders(reminders);
+        setLoading(false)})
+      .catch(error => console.log(error))
+    }
+
     useEffect(() => {
         fetch(`http://${config.IP_ADDRESS}:${config.PORT}/alerts` ,{
             method : "GET"
         })
         .then(resp => resp.json())
-        .then(reminders => {setReminders(reminders)})
+        .then(reminders => {setReminders(reminders);
+          setLoading(false)})
     }, []
 
     );

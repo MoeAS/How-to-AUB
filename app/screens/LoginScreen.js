@@ -4,7 +4,6 @@ import { ImageBackground, StyleSheet, View, Image, Text, Platform, Keyboard,  To
 import AppFormField from '../components/AppFormField';
 import AppForm from '../components/AppForm';
 import SubmitButton from '../components/SubmitButton';
-import LoginAfter from './LoginAfter';
 
 import {Formik} from 'formik';
 import * as Yup from 'yup';
@@ -34,10 +33,12 @@ function LoginScreen({props, navigation}) {
 
     [email, setEmail] = useState("");
     [password, setPassword] = useState("");
+    [done_survey, setSurvey] = useState([]);
 
     const headers = {"Content-type" : "application/json"};
 
     const signin = () => {
+      console.log(email)
         fetch(`http://${config.IP_ADDRESS}:${config.PORT}/signin`, {
             method: 'POST',
             headers: {
@@ -52,6 +53,7 @@ function LoginScreen({props, navigation}) {
 
         })
         .then((response) => {
+            console.log(response)
             console.log(response.status)
             if (response.status == 200) {
             Alert.alert(
@@ -62,7 +64,8 @@ function LoginScreen({props, navigation}) {
             ]
           );
 
-          navigation.navigate("How to Guide")
+          //navigation.navigate("How to Guide")
+          surveyCheck();
           }
 
           else if (response.status == 401) {
@@ -113,6 +116,36 @@ function LoginScreen({props, navigation}) {
   };
 
 
+  const surveyCheck = () => {
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/getsurvey/${email}`, {
+          method: 'GET',
+          headers: {
+              "Content-Type": "application/json"
+          },
+      })
+      .then(resp => resp.json())
+      .then(done_survey => {
+        setSurvey(done_survey);
+        console.log(done_survey);
+      })
+
+
+      .then((response) => {
+          console.log(response);
+
+          if (done_survey.done_survey == false){
+            console.log("survey not doneee");
+            navigation.navigate("EditProfile");
+          }
+
+          else{
+            console.log("survey doneeee");
+            navigation.navigate("HomePage");
+          }
+        })
+
+};
+
     return (
         <DismissKeyboard>
         <ImageBackground
@@ -143,7 +176,8 @@ function LoginScreen({props, navigation}) {
                 autoCapitalize = "none"
                 autoCorrect = {false}
                 keyboardType= "email-address"
-                mySetValue={setEmail}
+                value = {email => setEmail(email)}
+                onChangeText = {email => setEmail(email)}
                 />
 
                 <AppFormField
@@ -154,6 +188,7 @@ function LoginScreen({props, navigation}) {
                 secureTextEntry
                 keyboardType= "default"
                 mySetValue={setPassword}
+                onChangeText = {pass => setPassword(pass)}
                 />
                 </View>
             </DismissKeyboard>

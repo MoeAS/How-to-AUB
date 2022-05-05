@@ -27,7 +27,7 @@ export function DrawerContent(props){
               size = {50}
               />
               <View style = {{marginLeft: 15, flexDirection: 'column'}}>
-                  <Title style = {styles.title}>Full Name</Title>
+                  <Title style = {styles.title}>mba26</Title>
                   <Caption style = {styles.caption}>ID</Caption>
               </View>
             </View>
@@ -55,13 +55,13 @@ export function DrawerContent(props){
                   />
                 )}
                 label = "Profile"
-                onPress={() => {}}
+                onPress={() => {props.navigation.navigate('ProfileScreen')}}
                 />
 
                 <DrawerItem
                 icon = {({color, size}) => (
                   <Icon
-                  name = "map"
+                  name = "bell"
                   color = {color}
                   size = {size}
                   />
@@ -85,7 +85,7 @@ export function DrawerContent(props){
                 <DrawerItem
                 icon = {({color, size}) => (
                   <Icon
-                  name = "map"
+                  name = "web"
                   color = {color}
                   size = {size}
                   />
@@ -97,7 +97,7 @@ export function DrawerContent(props){
                 <DrawerItem
                 icon = {({color, size}) => (
                   <Icon
-                  name = "map"
+                  name = "web"
                   color = {color}
                   size = {size}
                   />
@@ -118,17 +118,6 @@ export function DrawerContent(props){
                 onPress={() => {props.navigation.navigate('AUB 3D Map')}}
                 />
 
-                <DrawerItem
-                icon = {({color, size}) => (
-                  <Icon
-                  name = "settings-helper"
-                  color = {color}
-                  size = {size}
-                  />
-                )}
-                label = "Settings"
-                onPress={() => {}}
-                />
 
                 <DrawerItem
                 icon = {({color, size}) => (
@@ -139,14 +128,14 @@ export function DrawerContent(props){
                   />
                 )}
                 label = "About Us"
-                onPress={() => {}}
+                onPress={() => {props.navigation.navigate('AboutUs')}}
                 />
             </Drawer.Section>
 
             <Drawer.Section title = "Pereferences">
                 <TouchableRipple onPress = {() => {toggleTheme()}}>
                     <View style = {styles.preference}>
-                        <Text>Dark Theme</Text>
+                        <Text>Notifications</Text>
                         <View pointerEvents = "none">
                           <Switch value={isDarkTheme}/>
                         </View>
@@ -167,7 +156,7 @@ export function DrawerContent(props){
           />
         )}
         label = "Sign Out"
-        onPress={() => {}}
+        onPress={() => props.navigation.navigate("LoginScreen")}
         />
       </Drawer.Section>
 

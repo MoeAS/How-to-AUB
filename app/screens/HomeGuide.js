@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ImageBackground, StyleSheet, View, Image, Button, Text, Platform} from 'react-native';
 
 import AppButton from '../components/AppButton';
-import LoginAfter from './LoginAfter';
 
 import colors from '../config/colors';
 
@@ -37,17 +36,25 @@ function HomeGuide({props, navigation}) {
 
                 <View style = {styles.buttoncontainer}>
                 <Text style = {styles.text}>Categories</Text>
+
                     <AppButton title = "Guides" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("HowtoGuide")}
                     ></AppButton>
+
+                    <AppButton title = "Reminders" color = "darkgray" textcolor = "white"
+                    onPress={() => navigation.navigate("CalendarScreen",{screen: 'CalendarScreen', params: {reminders: reminders}})}
+                    ></AppButton>
+                    
                     <AppButton title = "Clubs" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("Clubs")}
                     ></AppButton>
-                    <AppButton title = "Volunteering" color = "darkgray" textcolor = "white"
-                    onPress={() => navigation.navigate("CalendarScreen",{screen: 'CalendarScreen', params: {reminders: reminders}})}
-                    ></AppButton>
-                    <AppButton title = "Workshops" color = "darkgray" textcolor = "white"
+
+                    <AppButton title = "Courses" color = "darkgray" textcolor = "white"
                     onPress={() => navigation.navigate("Courses")}
+                    ></AppButton>
+
+                    <AppButton title = "Study Areas" color = "darkgray" textcolor = "white"
+                    onPress={() => navigation.navigate("StudyAreaScreen")}
                     ></AppButton>
                 </View>
 

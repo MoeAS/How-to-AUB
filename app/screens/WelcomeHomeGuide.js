@@ -61,22 +61,19 @@ function WelcomeHomeGuide({props, navigation}) {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-
         alignItems: "center",
     },
     buttoncontainer:{
         position: "absolute",
         width: '100%',
         padding: 60,
-        marginTop: Dimensions.get('window').height - 180
+        bottom: "-5%"
     },
     logocontent: {
         position: "absolute",
 
         alignItems: "center",
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 400,
-        marginTop: Dimensions.get('window').height - 780
+        marginTop: "5%"
     },
 
     cards: {
@@ -84,10 +81,8 @@ const styles = StyleSheet.create({
 
 
         alignItems: "center",
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height -650,
-        right: Dimensions.get('window').width- 400,
-        marginTop: Dimensions.get('window').height -640,
+        right: "4%",
+        marginTop: "22%",
 
     },
 
@@ -95,23 +90,19 @@ const styles = StyleSheet.create({
 
 
         alignItems: "center",
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height - 600,
-        right: Dimensions.get('window').width- 534,
-        marginTop: Dimensions.get('window').height - 1170,
+        right: "-30%",
+        marginTop: Dimensions.get('window').height - 1200,
     },
 
     textGuide: {
 
-        width: Dimensions.get('window').width,
-        marginTop: Dimensions.get('window').height - 1200,
-        right: Dimensions.get('window').width- 450,
+        marginTop: Dimensions.get('window').height - 1060,
+        right: "20%",
     },
     guides: {
 
-        width: Dimensions.get('window').width,
-        marginTop: Dimensions.get('window').height - 690,
-        right: Dimensions.get('window').width- 530,
+        marginTop: "25%",
+        right: "-7%",
     },
 
 

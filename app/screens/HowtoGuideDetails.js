@@ -27,6 +27,8 @@ function HowtoGuideDetails({props, route, navigation}) {
     const [description, setDescription] = useState("");
     const [rating, setRating] = useState(0);
     const [newforums, setNewForums] = useState(forums)
+    const [reply, setReply] = useState([])
+    const [loading, setLoading] = useState(true);
 
     const ratingChanged = (newRating) => {
       console.log(newRating)
@@ -80,9 +82,22 @@ function HowtoGuideDetails({props, route, navigation}) {
       .catch(error => console.log(error))
     }
 
+    const loadReplyData = () => {
+      fetch(`http://${config.IP_ADDRESS}:${config.PORT}/getforumreply/${forums.id}/` ,{
+          method : "GET"
+      })
+      .then(resp => resp.json())
+      .then(reply => {
+        setReply(reply)
+        setLoading(false)
+      })
+      .catch(error => console.log(error))
+    }
+
 
     useEffect(() => {
-        loadData()
+        loadData();
+        loadReplyData();
     }, [route]
 
     )
@@ -102,12 +117,25 @@ function HowtoGuideDetails({props, route, navigation}) {
       .then((response) => {
           console.log(response.status)
           response.json()
-          loadData()}
+          loadData()
+          loadReplyData()}
         )
 
       .catch(error => console.log(error))
 
     }
+
+    const renderData = (item) => {
+        return(
+          <Card style = {styles.card}>
+            <Text style = {{fontSize: 20, marginBottom: 10, fontWeight: "bold", color: "black"}}>{item.user_email}</Text>
+            <Text style = {{left: "0%",fontSize: 12, color: "black"}}>{item.date}</Text>
+            <Text style = {{marginTop: "10%", left: "0%", color: "black"}}>{item.description}</Text>
+          </Card>
+        )
+    }
+
+    console.log(reply)
 
     return (
 
@@ -131,29 +159,47 @@ function HowtoGuideDetails({props, route, navigation}) {
 
             <View style = {styles.container}>
 
-            <Text style = {{fontSize: 30, top:Dimensions.get('window').height - 880, color:"#FFFFFF"}}>
+
+            <Text style = {{fontSize: 30, top:"-15%", color:"#FFFFFF"}}>
               {forums.title}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 830, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:"-15%", color:"#FFFFFF"}}>
               {forums.date}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 900, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:"-10%", color:"#FFFFFF"}}>
               {forums.user_email}
             </Text>
 
-            <Text style = {{fontSize: 20, top:Dimensions.get('window').height - 800, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 20, top:"0%", color:"#FFFFFF"}}>
               {forums.description}
             </Text>
 
-            <Text style = {{fontSize: 15, marginTop: 10, top:Dimensions.get('window').height - 580, right:Dimensions.get('window').width-700, color:"#FFFFFF"}}>
+            <Text style = {{fontSize: 15, marginTop: 10, top:"-57%", right:"-85%", color:"#FFFFFF"}}>
               Rating: {newforums.rating}
             </Text>
 
+            <View style={{height: "70%"}}>
+
+            <FlatList
+                data = {reply}
+                renderItem = {({item}) =>
+                    {
+                      return renderData(item)
+                    }
+                }
+                onRefresh = {() => loadReplyData()}
+                refreshing = {loading}
+                keyExtractor = {item => `${item.id}`}
+
+            />
+
+            </View>
+
             <View style = {styles.buttons}>
 
-            <View style = {{top:Dimensions.get('window').height - 720, left: Dimensions.get('window').width - 320, position: 'absolute'}}>
+            <View style = {{top:"20%", left: "35%", position: 'absolute'}}>
 
             <StarRating style = {{margin: 10, top:0}}
             disabled={false}
@@ -170,7 +216,7 @@ function HowtoGuideDetails({props, route, navigation}) {
             </View>
 
             <Button
-            style = {{margin: 10, borderRadius: 15, top:Dimensions.get('window').height - 790, left:Dimensions.get('window').width -400}}
+            style = {{margin: 10, borderRadius: 15, top:"-205%", right:"50%"}}
             icon = "update"
             mode = "contained"
             color = "yellow"
@@ -179,7 +225,7 @@ function HowtoGuideDetails({props, route, navigation}) {
 
 
             <Button
-            style = {{margin: 10, borderRadius: 15,top:Dimensions.get('window').height - 790, left:Dimensions.get('window').width -320}}
+            style = {{margin: 10, borderRadius: 15,top:"-205%", right:"-240%"}}
             icon = "delete"
             mode = "contained"
             color = "yellow"
@@ -189,6 +235,14 @@ function HowtoGuideDetails({props, route, navigation}) {
             </View>
 
             </View>
+
+            <FAB
+              style = {styles.fab}
+              small = {true}
+              icon = "reply"
+              theme = {{colors:{accent: "yellow"}}}
+              onPress = {() => navigation.navigate("CreateReplyForum", {screen: 'CreateReplyForum', params: {reply: forums.id}})}
+            />
 
 
 </View>
@@ -227,8 +281,8 @@ const styles = StyleSheet.create({
     fab: {
       position: 'absolute',
       margin:16,
-      right: 0,
-      bottom: Dimensions.get('window').height - Dimensions.get('window').width - 270,
+      right: "0%",
+      bottom: "-5%",
     },
 
     container: {

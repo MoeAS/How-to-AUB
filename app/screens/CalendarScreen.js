@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         margin:16,
         left: 0,
-        bottom: Dimensions.get('window').height - Dimensions.get('window').width - 370,
+        bottom: "0%",
 
       },
 

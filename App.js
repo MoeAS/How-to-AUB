@@ -24,7 +24,6 @@ import WelcomeScreen from './app/screens/WelcomeScreen';
 import SignupLogin from './app/screens/SignupLogin';
 import SignupScreen from './app/screens/SignupScreen';
 import LoginScreen from './app/screens/LoginScreen';
-import LoginAfter from './app/screens/LoginAfter';
 import HomeGuide from './app/screens/HomeGuide';
 import ClubsScreen from './app/screens/ClubsScreen';
 import CoursesScreen from './app/screens/CoursesScreen';
@@ -33,12 +32,18 @@ import HowtoGuideDetails from './app/screens/HowtoGuideDetails';
 import HowtoGuideDetailsEdit from './app/screens/HowtoGuideDetailsEdit';
 import HowtoGuide from './app/screens/HowtoGuide';
 import CreateForum from './app/screens/CreateForum';
+import CreateReplyForum from './app/screens/CreateReplyForum';
 import CalendarScreen from './app/screens/CalendarScreen';
 import WelcomeHomeGuide from './app/screens/WelcomeHomeGuide';
 import ClubDetails from './app/screens/ClubDetails';
 import CreateReminder from './app/screens/CreateReminder';
 import AlertsScreen from './app/screens/AlertsScreen';
 import HomePage from './app/screens/HomePage';
+import Survey from './app/screens/Survey';
+import AboutUs from './app/screens/AboutUs';
+import StudyAreaScreen from './app/screens/StudyAreaScreen';
+import ProfileScreen from './app/screens/ProfileScreen';
+import EditProfile from './app/screens/EditProfile';
 import AppTextInput from './app/components/AppTextInput';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -46,10 +51,10 @@ import { WebView } from 'react-native-webview';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { DrawerContent } from './app/components/DrawerContent';
+import { LogBox } from 'react-native';
 
 
-
-
+const HIDE_LOGS = true;
 
 
 const AUB2DMAP = 'https://www.aub.edu.lb/Documents/map_posters.pdf';
@@ -87,7 +92,6 @@ const WelcomeScreenStack = createNativeStackNavigator();
 const SignupLoginStack = createNativeStackNavigator();
 const LoginScreenStack = createNativeStackNavigator();
 const SignupScreenStack = createNativeStackNavigator();
-const LoginAfterStack = createNativeStackNavigator();
 const HomeGuideStack = createNativeStackNavigator();
 const AUBMAPSStack = createNativeStackNavigator();
 const AUBSISStack = createNativeStackNavigator();
@@ -97,6 +101,7 @@ const CoursesScreenStack = createNativeStackNavigator();
 const CourseDetailsStack = createNativeStackNavigator();
 const HowtoGuideStack = createNativeStackNavigator();
 const CreateForumStack = createNativeStackNavigator();
+const CreateReplyForumStack = createNativeStackNavigator();
 const HowtoGuideDetailsStack = createNativeStackNavigator();
 const HowtoGuideDetailsEditStack = createNativeStackNavigator();
 const CalendarScreenStack = createNativeStackNavigator();
@@ -105,11 +110,16 @@ const ClubDetailsStack = createNativeStackNavigator();
 const CreateReminderStack = createNativeStackNavigator();
 const HomePageStack = createNativeStackNavigator();
 const AlertsScreenStack = createNativeStackNavigator();
+const SurveyStack = createNativeStackNavigator();
+const ProfileScreenStack = createNativeStackNavigator();
+const EditProfileStack = createNativeStackNavigator();
+const StudyAreaScreenStack = createNativeStackNavigator();
+const AboutUsStack = createNativeStackNavigator();
 
     const WelcomeStackScreen = ({navigation}) => (
     <WelcomeScreenStack.Navigator>
     <WelcomeScreenStack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{
-    headerShown: true,
+    headerShown: false,
     headerTransparent: true,
     title: '',
     headerLeft: () => (
@@ -123,7 +133,7 @@ const AlertsScreenStack = createNativeStackNavigator();
     const SignupLoginStackScreen = ({navigation}) => (
     <SignupLoginStack.Navigator>
     <SignupLoginStack.Screen name="SignupLogin" component={SignupLogin} options={{
-    headerShown: true,
+    headerShown: false,
     headerTransparent: true,
     title: '',
     headerLeft: () => (
@@ -137,7 +147,7 @@ const AlertsScreenStack = createNativeStackNavigator();
     const LoginStackScreen = ({navigation}) => (
     <LoginScreenStack.Navigator>
     <LoginScreenStack.Screen name="LoginScreen" component={LoginScreen} options={{
-    headerShown: true,
+    headerShown: false,
     headerTransparent: true,
     title: '',
     headerLeft: () => (
@@ -151,7 +161,7 @@ const AlertsScreenStack = createNativeStackNavigator();
     const SignupStackScreen = ({navigation}) => (
     <SignupScreenStack.Navigator>
     <SignupScreenStack.Screen name="SignupScreen" component={SignupScreen} options={{
-    headerShown: true,
+    headerShown: false,
     headerTransparent: true,
     title: '',
     headerLeft: () => (
@@ -160,20 +170,6 @@ const AlertsScreenStack = createNativeStackNavigator();
     )
     }}/>
     </SignupScreenStack.Navigator>
-    );
-
-    const LoginAfterStackScreen = ({navigation}) => (
-    <LoginAfterStack.Navigator>
-    <LoginAfterStack.Screen name="LoginAfter" component={LoginAfter} options={{
-    headerShown: true,
-    headerTransparent: true,
-    title: '',
-    headerLeft: () => (
-    <Icon name='ios-menu' size = {25}
-    onPress={() => {navigation.openDrawer()}}></Icon>
-    )
-    }}/>
-    </LoginAfterStack.Navigator>
     );
 
     const HomeGuideStackScreen = ({navigation}) => (
@@ -396,7 +392,77 @@ const AlertsScreenStack = createNativeStackNavigator();
 
     const AlertsStackScreen = ({navigation}) => (
     <AlertsScreenStack.Navigator>
-      <AlertsScreenStack.Screen name="Alerts" component={AlertsScreen} options={{
+    <AlertsScreenStack.Screen name="Alerts" component={AlertsScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </AlertsScreenStack.Navigator>
+    );
+
+    const CreateReplyForumStackScreen = ({navigation}) => (
+    <CreateReplyForumStack.Navigator>
+    <CreateReplyForumStack.Screen name="CreateReplyForum" component={CreateReplyForum} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </CreateReplyForumStack.Navigator>
+    );
+
+    const SurveyStackScreen = ({navigation}) => (
+    <SurveyStack.Navigator>
+    <SurveyStack.Screen name="Survey" component={Survey} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </SurveyStack.Navigator>
+    );
+
+    const ProfileStackScreen = ({navigation}) => (
+    <ProfileScreenStack.Navigator>
+    <ProfileScreenStack.Screen name="ProfileScreen" component={ProfileScreen} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </ProfileScreenStack.Navigator>
+    );
+
+    const EditProfileStackScreen = ({navigation}) => (
+    <EditProfileStack.Navigator>
+    <EditProfileStack.Screen name="EditProfile" component={EditProfile} options={{
+    headerShown: true,
+    headerTransparent: true,
+    title: '',
+    headerLeft: () => (
+    <Icon name='ios-menu' size = {25}
+    onPress={() => {navigation.openDrawer()}}></Icon>
+    )
+    }}/>
+    </EditProfileStack.Navigator>
+    );
+
+    const StudyAreaStackScreen = ({navigation}) => (
+    <StudyAreaScreenStack.Navigator>
+      <StudyAreaScreenStack.Screen name="StudyArea" component={StudyAreaScreen} options={{
         headerShown: true,
         headerTransparent: true,
         title: '',
@@ -405,10 +471,28 @@ const AlertsScreenStack = createNativeStackNavigator();
         onPress={() => {navigation.openDrawer()}}></Icon>
         )
       }}/>
-    </AlertsScreenStack.Navigator>
+    </StudyAreaScreenStack.Navigator>
+    );
+
+    const AboutUsStackScreen = ({navigation}) => (
+    <AboutUsStack.Navigator>
+      <AboutUsStack.Screen name="AboutUs" component={AboutUs} options={{
+        headerShown: true,
+        headerTransparent: true,
+        title: '',
+        headerLeft: () => (
+        <Icon name='ios-menu' size = {25}
+        onPress={() => {navigation.openDrawer()}}></Icon>
+        )
+      }}/>
+    </AboutUsStack.Navigator>
     );
 
 const App = () => {
+
+  if (HIDE_LOGS == true) {
+    LogBox.ignoreAllLogs();//Ignore all log notifications
+  }
 
   return (
 
@@ -423,7 +507,6 @@ const App = () => {
         <Drawer.Screen name="AUB 3D Map" component={AUBMAPSStackScreen} />
         <Drawer.Screen name="SignupLogin" component={SignupLoginStackScreen} />
         <Drawer.Screen name="LoginScreen" component={LoginStackScreen} />
-        <Drawer.Screen name="LoginAfter" component={LoginAfterStackScreen} />
         <Drawer.Screen name="SignupScreen" component={SignupStackScreen} />
         <Drawer.Screen name="AUBSIS" component={AUBSISStackScreen} />
         <Drawer.Screen name="AUBMOODLE" component={AUBMOODLEStackScreen} />
@@ -440,6 +523,12 @@ const App = () => {
         <Drawer.Screen name="CreateReminder" component={CreateReminderStackScreen} />
         <Drawer.Screen name="HomePage" component={HomePageStackScreen} />
         <Drawer.Screen name="AlertsScreen" component={AlertsStackScreen} />
+        <Drawer.Screen name="CreateReplyForum" component={CreateReplyForumStackScreen} />
+        <Drawer.Screen name="Survey" component={SurveyStackScreen} />
+        <Drawer.Screen name="ProfileScreen" component={ProfileStackScreen} />
+        <Drawer.Screen name="EditProfile" component={EditProfileStackScreen} />
+        <Drawer.Screen name="StudyAreaScreen" component={StudyAreaStackScreen} />
+        <Drawer.Screen name="AboutUs" component={AboutUsStackScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
 

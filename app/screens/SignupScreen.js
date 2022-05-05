@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     },
     signupbutton:{
         top: -80,
-        marginVertical: 500,
+        marginVertical: 450,
         marginHorizontal:15,
         padding: 15,
         width: "100%",

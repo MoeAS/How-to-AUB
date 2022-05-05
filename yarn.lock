@@ -1195,6 +1195,33 @@
     "lodash.pick" "^4.4.0"
     "lodash.template" "^4.5.0"
 
+"@fortawesome/fontawesome-common-types@6.1.1":
+  "integrity" "sha512-wVn5WJPirFTnzN6tR95abCx+ocH+3IFLXAgyavnf9hUmN0CfWoDjPT/BAWsUVwSlYYVBeCLJxaqi7ZGe4uSjBA=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-6.1.1.tgz"
+  "version" "6.1.1"
+
+"@fortawesome/fontawesome-svg-core@^1.2.4", "@fortawesome/fontawesome-svg-core@^6.1.1":
+  "integrity" "sha512-NCg0w2YIp81f4V6cMGD9iomfsIj7GWrqmsa0ZsPh59G7PKiGN1KymZNxmF00ssuAlo/VZmpK6xazsGOwzKYUMg=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-6.1.1.tgz"
+  "version" "6.1.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.1.1"
+
+"@fortawesome/free-solid-svg-icons@^6.1.1":
+  "integrity" "sha512-0/5exxavOhI/D4Ovm2r3vxNojGZioPwmFrKg0ZUH69Q68uFhFPs6+dhAToh6VEQBntxPRYPuT5Cg1tpNa9JUPg=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.1.1.tgz"
+  "version" "6.1.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "6.1.1"
+
+"@fortawesome/react-native-fontawesome@^0.2.7":
+  "integrity" "sha512-H3FjE01PDKGTZW+pXMsaCklT0FADaHo4D+Ni63BSXNQclmFgKj2Xlky37cx0s1BaIIw1geuHcyg0hdFxbACusw=="
+  "resolved" "https://registry.npmjs.org/@fortawesome/react-native-fontawesome/-/react-native-fontawesome-0.2.7.tgz"
+  "version" "0.2.7"
+  dependencies:
+    "humps" "^2.0.1"
+    "prop-types" "^15.7.2"
+
 "@hapi/hoek@^9.0.0":
   "integrity" "sha512-gfta+H8aziZsm8pZa0vj04KO6biEiisppNgA1kbJvFrrWu9Vm7eaUEy76DIxsuTaWvti5fkJVhllWc6ZTE+Mdw=="
   "resolved" "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.2.1.tgz"
@@ -4389,6 +4416,11 @@
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-1.1.1.tgz"
   "version" "1.1.1"
 
+"humps@^2.0.1":
+  "integrity" "sha1-3QLqYIG9BWjcXQcxhEY5V7qe+ao="
+  "resolved" "https://registry.npmjs.org/humps/-/humps-2.0.1.tgz"
+  "version" "2.0.1"
+
 "i@0.3.x":
   "integrity" "sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q=="
   "resolved" "https://registry.npmjs.org/i/-/i-0.3.7.tgz"
@@ -7154,6 +7186,14 @@
   "resolved" "https://registry.npmjs.org/react-native-select-dropdown/-/react-native-select-dropdown-1.11.0.tgz"
   "version" "1.11.0"
 
+"react-native-selectmultiple-button@^0.1.105":
+  "integrity" "sha512-I6nu1govK449s0pMw79AO8Vm4q5yQqV4/VPX71Qu5F10hDbV6YKThsiTuhXAQhHsr6rdxEG0zehv/VJGSZE/yQ=="
+  "resolved" "https://registry.npmjs.org/react-native-selectmultiple-button/-/react-native-selectmultiple-button-0.1.105.tgz"
+  "version" "0.1.105"
+  dependencies:
+    "react" ">=16.2.0"
+    "react-native" ">=0.53.0"
+
 "react-native-snap-carousel@^3.9.1":
   "integrity" "sha512-xWEGusacIgK1YaDXLi7Gao2+ISLoGPVEBR8fcMf4tOOJQufutlNwkoLu0l6B8Qgsrre0nTxoVZikRgGRDWlLaQ=="
   "resolved" "https://registry.npmjs.org/react-native-snap-carousel/-/react-native-snap-carousel-3.9.1.tgz"
@@ -7177,7 +7217,7 @@
     "react-native-button" "^2.3.0"
     "react-native-vector-icons" "^4.5.0"
 
-"react-native-svg@*":
+"react-native-svg@*", "react-native-svg@> 7.0":
   "integrity" "sha512-ESG1g1j7/WLD7X3XRFTQHVv0r6DpbHNNcdusngAODIxG88wpTWUZkhcM3A2HJTb+BbXTFDamHv7FwtRKWQ/ALg=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-12.3.0.tgz"
   "version" "12.3.0"
@@ -7229,7 +7269,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@*", "react-native@^0.67.2", "react-native@>= 0.30.0", "react-native@>= 0.47.x", "react-native@>=0.42.0", "react-native@>=0.50.0":
+"react-native@*", "react-native@^0.67.2", "react-native@> 0.57", "react-native@>= 0.30.0", "react-native@>= 0.47.x", "react-native@>=0.42.0", "react-native@>=0.50.0", "react-native@>=0.53.0":
   "integrity" "sha512-grEtpOLLvtSg8Bivg0ffVRCjTkresqMt7Jdog/geF6VAYhb4RnLaaUCWvyrfyB9buf135FKnqg5BIuve/XQNXA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.67.2.tgz"
   "version" "0.67.2"
@@ -7300,7 +7340,7 @@
     "react-shallow-renderer" "^16.13.1"
     "scheduler" "^0.20.2"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.0", "react@>= 15.2.1", "react@>= 15.x", "react@>=15.0.0", "react@>=16.3.0", "react@>=16.8.0", "react@17.0.2":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.0", "react@>= 15.2.1", "react@>= 15.x", "react@>= 16.x", "react@>=15.0.0", "react@>=16.2.0", "react@>=16.3.0", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
