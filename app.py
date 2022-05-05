@@ -16,6 +16,7 @@ from flask_admin import Admin, expose, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user
 from flask_admin.menu import MenuLink
+from sqlalchemy import Boolean
 
 #from .db_config import DB_CONFIG
 
@@ -84,16 +85,18 @@ class User(db.Model, UserMixin):
     user_email = db.Column(db.String(30), unique=True)
     user_name = db.Column(db.String(30), unique=True)
     hashed_password = db.Column(db.String(128))
+    done_survey = db.Column(db.Boolean)
 
-    def __init__(self, user_email = "", user_name = "", password = "0"):
+    def __init__(self, user_email = "", user_name = "", password = "0", done_survey=0):
         #super(User, self).__init__(id=id)
         super(User, self).__init__(user_email=user_email)
         super(User, self).__init__(user_name=user_name)
         self.hashed_password = bcrypt.generate_password_hash(password)
+        super(User, self).__init__(done_survey=done_survey)
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ("id", "user-email", "user_name", "hashed_password")
+        fields = ("id", "user-email", "user_name", "hashed_password", "done_survey")
         model = User
 
 
@@ -225,7 +228,63 @@ class ReminderSchema(ma.Schema):
 
 reminder_schema = ReminderSchema()
 reminders_schema = ReminderSchema(many=True)
-#admin.add_view(MyModelView(Reminder, db.session))
+admin.add_view(MyModelView(Reminder, db.session))
+
+
+class ForumReply(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_email = db.Column(db.String(30))
+    forum_id = db.Column(db.Integer)
+    description = db.Column(db.Text())
+    date = db.Column(db.DateTime, default = datetime.datetime.now)
+
+    def __init__(self, user_email, forum_id, description):
+        #super(Forum, self).__init__(id=id)
+        super(ForumReply, self).__init__(user_email=user_email)
+        super(ForumReply, self).__init__(forum_id=forum_id)
+        super(ForumReply, self).__init__(description=description)
+        #super(Forum, self).__init__(date=date)
+
+
+class ForumReplySchema(ma.Schema):
+    class Meta:
+        fields = ("id", "user_email", "forum_id", "description", "date")
+        model = ForumReply
+
+
+forumreply_schema = ForumReplySchema()
+forumreplies_schema = ForumReplySchema(many=True)
+admin.add_view(MyModelView(ForumReply, db.session))
+
+
+class Study(db.Model):
+    place_id = db.Column(db.Integer, primary_key=True, autoincrement= True)
+    place_name = db.Column(db.String(30))
+    place_description = db.Column(db.Text())
+    place_image = db.Column(db.String(70))
+
+    def __init__(self, place_id, place_name, place_description, place_image):
+        super(Study, self).__init__(place_id = place_id)
+        super(Study, self).__init__(place_name=place_name)
+        super(Study, self).__init__(place_description=place_description)
+        super(Study, self).__init__(place_image=place_image)
+
+class StudySchema(ma.Schema):
+    class Meta:
+        fields = ("place_id",  "place_name", "place_description", "place_image")
+        model = Study
+
+
+
+
+study_schema = StudySchema()
+studys_schema = StudySchema(many=True)
+admin.add_view(MyModelView(Study, db.session))
+
+
+
+
 
 @app.route('/hello', methods=['GET'])
 def hello():
@@ -240,12 +299,21 @@ def signup():
     user_name = request.json['user_name']
     hashed_password = request.json['password']
 
+    if (user_email == "" or hashed_password == ""):
+        return jsonify({"msg": "Enter email or password"}), 401
+
+    if (user_name == ""):
+        return jsonify({"msg": "Enter username" }), 403
+
+    if user_name.startswith("admin"):
+        return jsonify({"msg": "Invalid username"}), 402
+
     u = User(user_email, user_name, hashed_password)
     db.session.add(u)
     db.session.commit()
     return jsonify(user_schema.dump(u))
 
-@app.route('/signin', methods=['POST'])
+@app.route('/signin', methods=['POST', 'GET'])
 def signin():
     print(request)
     user_email= request.json['user_email']
@@ -266,6 +334,20 @@ def signin():
                 return jsonify({"msg": "Wrong Password"}), 403
 
     db.session.add(user)
+    db.session.commit()
+    return jsonify(user_schema.dump(user))
+
+@app.route('/getsurvey/<user_email>', methods=['GET'])
+def getsurvey(user_email):
+    print(request)
+    user = User.query.filter_by(user_email=user_email).first()
+    return jsonify(user_schema.dump(user))
+
+@app.route('/setsurvey/<user_email>', methods=['GET'])
+def setsurvey(user_email):
+    print(request)
+    user = User.query.filter_by(user_email=user_email).first()
+    user.done_survey = 1
     db.session.commit()
     return jsonify(user_schema.dump(user))
 
@@ -344,6 +426,28 @@ def rateforum(id):
 
     return jsonify(forum_schema.dump(forums))
 
+@app.route('/getforumreply/<id>/', methods=['GET'])
+def getforumreply(id):
+    print(request)
+    forum_id = id
+    forum_reply = ForumReply.query.filter_by(forum_id=id).all()
+    return jsonify(forumreplies_schema.dump(forum_reply))
+
+@app.route('/forumreply/<id>/', methods=['POST'])
+def forumreply(id):
+    print(request)
+
+    forum_id = id
+    description = request.json['description']
+    user_email = request.json['user_email']
+
+    forum_reply = ForumReply(user_email, forum_id, description)
+
+    db.session.add(forum_reply)
+    db.session.commit()
+
+    return jsonify(forumreply_schema.dump(forum_reply))
+
 ################################## CLUBS PAGE ##################################
 
 @app.route('/clubs', methods=['GET'])
@@ -360,6 +464,12 @@ def interest():
     return jsonify(clubs_schema.dump(all_interests))
 
 ################################## COURSES PAGE ################################
+
+@app.route('/study', methods=['GET'])
+def study():
+    print(request)
+    all_areas = Study.query.all()
+    return jsonify(studys_schema.dump(all_areas))
 
 @app.route('/courses', methods=['GET'])
 def courses():
