@@ -11,6 +11,8 @@ npm install
 
 react-native run-android
 
+pip3 install -r requirements.txt
+
 ------------------------------------------------------------------------------------
 
 # Some codes to keep in mind when pushing or pulling from github:
