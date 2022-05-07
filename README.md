@@ -1,7 +1,7 @@
 # How-to-AUB
 
 
-![cover]https://github.com/MoeAS/How-to-AUB/blob/frontend/poster-fyppp.pdf
+![alt text](https://github.com/MoeAS/How-to-AUB/blob/frontend/poster-fyp.png?raw=true)
 
 
 
