@@ -1,5 +1,10 @@
 # How-to-AUB
 
+
+[embed]https://github.com/MoeAS/How-to-AUB/blob/frontend/poster-fyppp.pdf[/embed]
+
+
+
 # Some codes to keep in mind when developing:
 
 npm install
