@@ -17,10 +17,18 @@ from flask_admin.contrib.sqla import ModelView
 from flask_login import UserMixin, LoginManager, current_user, login_user, logout_user
 from flask_admin.menu import MenuLink
 from sqlalchemy import Boolean
+from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
+from getpass import getpass
 
 #from .db_config import DB_CONFIG
 
+ip_of_db = "127.0.0.1"
+username = "root"
+password = "7aMoudi72571"
+db_name = "howtoaub"
 
+url = f'mysql+pymysql://{username}:{password}@{ip_of_db}:3306/{db_name}'
 
 app = Flask(__name__)
 app = Flask(__name__)
@@ -29,7 +37,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '7aMoudi72571'
 app.config['MYSQL_DB'] = 'howtoaub'
 mysql = MySQL(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:7aMoudi72571@127.0.0.1:3306/howtoaub'
+app.config['SQLALCHEMY_DATABASE_URI'] = url
 app.config['SECRET_KEY'] = 'mysecret'
 db = SQLAlchemy(app)
 
@@ -39,6 +47,16 @@ login_manager.login_view = 'login'
 CORS(app)
 ma = Marshmallow(app)
 bcrypt = Bcrypt(app)
+
+
+engine = create_engine(url, echo=True)
+
+# Create database if it does not exist.
+if not database_exists(engine.url):
+    create_database(engine.url)
+else:
+    # Connect the database if exists.
+    engine.connect()
 
 #from model.user import User, user_schema
 
