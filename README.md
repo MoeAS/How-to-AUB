@@ -4,7 +4,6 @@
 ![alt text](https://github.com/MoeAS/How-to-AUB/blob/frontend/poster-fyp.png?raw=true)
 
 
-
 # Some codes to keep in mind when developing:
 
 npm install
@@ -13,13 +12,22 @@ react-native run-android
 
 pip3 install -r requirements.txt
 
-1- python
-2- from app import db
-3- db.create_all()
-4- exit()
-5- ipconfig
-6- get local adapter (NIC) Ethernet IP address (IPV4) E.g. 192.168.1.19
-7- flask run -h <INSERT FOUND IP HERE> -p 3000
+In cmd/terminal cd to backend folder:
+
+ 1) python
+ 2) from app import db
+ 3) db.create_all()
+ 4) exit()
+ 5) pip3 install -r requirements.txt
+ 6) ipconfig
+ 7) get local adapter (NIC) Ethernet IP address (IPV4) E.g. 192.168.1.14
+ 8) flask run -h &lt;INSERT FOUND IP HERE&gt; -p 3000, example: flask run -h 192.168.1.14 -p 3000
+ 
+ 
+ IMPORTANT NOTES:
+ 
+  1) change ip_of_db, username, password (located in backend/app.py) if any are different in your system
+  2) change IP_ADDRESS in frontend/app/config/config.json (same as the ip found in ipconfig)
 
 
 ------------------------------------------------------------------------------------
@@ -66,11 +74,11 @@ yourProject/android/app/build/outputs/apk/debug/app-debug.apk
 
 ------------------------------------------------------------------------------------
 
-# SQL Queries example data:
+# SQL Queries sample data:
 
 NOTE: TO SIGN IN PASSWORD IS (FOR ALL USERS BELOW): 123
 
 - Open SQL.txt
-- CTRL A -> CTRL C
+- Copy all
 - Open mysql workbench
 - Paste all the contents and run the query
